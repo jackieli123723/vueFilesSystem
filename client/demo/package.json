@@ -1,6 +1,7 @@
 {
   "name": "vueFilesSystem",
   "version": "0.1.0",
+  "author":"jackieli",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

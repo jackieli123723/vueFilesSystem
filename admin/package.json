@@ -1,0 +1,11 @@
+{
+  "name": "jackieli",
+  "version": "1.0.0",
+  "description": "node koa mongooose multer ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jakieli",
+  "license": "ISC"
+}

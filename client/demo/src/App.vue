@@ -1,18 +1,13 @@
 <template>
   <div class="frame-all" id="app">
-    <div class="skin-main"></div>
-    <!-- 左边nav -->
-    <layoutAside />
-     <!-- 路由中间 -->
-    <layoutMain />
-    <!-- 头部 -->
-    <layoutHeader />
+       <router-view></router-view>
   </div>
 </template>
 <script>
 import layoutAside from './components/layoutAside/index'
 import layoutMain from './components/layoutMain/index'
 import layoutHeader from './components/layoutHeader/index'
+
 export default {
   name: 'app',
   components: {
@@ -22,7 +17,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" >
 
 @import "./assets/less/function.less";
 

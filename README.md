@@ -4,8 +4,10 @@
 
 node开发一个仿百度网盘的文件管理系统
 ## vue-cli3.0+webpack4+
-## node+mongodb+redis+jwt+邮件找回密码
+## node+mongodb+redis+jwt+koa+邮件找回密码+第三方登录（qq 微信 微博 github） 邮件找回密码
 ## docker pm2 自动部署
+
+
 
 
 文件类型统计 
@@ -35,6 +37,61 @@ Node 7.6默认支持Async/Await - InfoQ
 迎接async await 新时代- 早起搬砖morning.work
 接口 要用 async await 
 
+
+
+user modle
+
+token
+theme
+level
+
+email
+username
+password
+avatr
+
+
+需要验证码
+需要有个邮箱 找回密码
+
+可以 qq 微博 github 登陆
+
+category
+:
+1
+fs_id
+:
+293589069589859
+isdir
+:
+0
+local_ctime
+:
+1456799051
+local_mtime
+:
+1456799051
+md5
+:
+"21131e2f4f30965dfecd29b37d139175"
+object_key
+:
+"E-pSt6rID4vmoI3eDlMXISZ1kjI38i52MI52elqoI7s"
+path
+:
+"/bilinyou/imooc/最前沿技术/__MACOSX/AnimatedTextFillsAll/img/._bokeh2.mp4"
+server_ctime
+:
+1456799051
+server_filename
+:
+"._bokeh2.mp4"
+server_mtime
+:
+1456799051
+size
+:
+448
 
 
 

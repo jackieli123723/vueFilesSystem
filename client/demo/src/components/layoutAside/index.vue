@@ -1,62 +1,27 @@
 <template>
 <div class="frame-aside" id="layoutAside">
-    <div class="P6eoH5ns" node-type="P6eoH5ns">
-        <div node-type="ckzbgKQ" class="module-aside DtJtsC">
-            <div class="KHbQCub"></div>
-            <ul class="fOHAbxb">
-                <li node-type="whmwGMEa" data-key="list" class="lvhwXz5w bHzsaPb">
-                    <a node-type="drXy5m" path="/" class="suaXvAq kuskajv" hidefocus="true" href="javascript:void(0);">
-<span class="text">
-<span node-type="ukfmGmJr" class="icon icon-disk"></span>
-<span node-type="vjzgXZDQ">全部文件</span>
-</span>
-</a>
-                </li>
-                <li node-type="whmwGMEa" data-key="pic" class="lvhwXz5w">
-                    <a node-type="drXy5m" class="kuskajv" hidefocus="true" href="/disk/timeline">
-<span class="text">
-<span node-type="vjzgXZDQ">图片</span>
-</span>
-</a>
-                </li>
-                <li node-type="whmwGMEa" data-key="doc" class="lvhwXz5w">
-                    <a node-type="drXy5m" cat="4" class="kuskajv" hidefocus="true" href="javascript:void(0);">
-<span class="text">
-<span node-type="vjzgXZDQ">文档</span>
-</span>
-</a>
-                </li>
-                <li node-type="whmwGMEa" data-key="video" class="lvhwXz5w">
-                    <a node-type="drXy5m" cat="1" class="kuskajv" hidefocus="true" href="javascript:void(0);">
-<span class="text">
-<span node-type="vjzgXZDQ">视频</span>
-</span>
-</a>
-                </li>
-                <li node-type="whmwGMEa" data-key="mbt" class="lvhwXz5w">
-                    <a node-type="drXy5m" cat="7" class="kuskajv" hidefocus="true" href="javascript:void(0);">
-<span class="text">
-<span node-type="vjzgXZDQ">种子</span>
-</span>
-</a>
-                </li>
-                <li node-type="whmwGMEa" data-key="music" class="lvhwXz5w">
-                    <a node-type="drXy5m" cat="2" class="kuskajv" hidefocus="true" href="javascript:void(0);">
-<span class="text">
-<span node-type="vjzgXZDQ">音乐</span>
-</span>
-</a>
-                </li>
-                <li node-type="whmwGMEa" data-key="other" class="lvhwXz5w">
-                    <a node-type="drXy5m" cat="6" class="kuskajv" hidefocus="true" href="javascript:void(0);">
-<span class="text">
-<span node-type="vjzgXZDQ">其它</span>
-</span>
-</a>
-                </li>
-            </ul>
-     
- 
+    <div class="P6eoH5ns">
+        <div  class="module-aside DtJtsC">
+              <div class="KHbQCub"></div>
+               <ul class="fOHAbxb">
+                        <!-- <router-link to="/all" >all</router-link>
+                         <router-link to="/picture/timeline" >picturetimeline</router-link>
+                           <router-link to="/document" >document</router-link>
+                             <router-link to="/bt" >bt</router-link>
+                               <router-link to="/video" >video</router-link>
+                                 <router-link to="/music" >music</router-link>
+                                   <router-link to="/other" >other</router-link>
+                                    <router-link to="/share" >share</router-link>
+                                     <router-link to="/recycled" >recycled</router-link> -->
+                        <li v-for="(nav,index) in navLinks"  class="lvhwXz5w" :class="{'bHzsaPb':navLinkActived == index}"  :key='index'>
+                           <router-link :to=nav class="suaXvAq kuskajv"  >
+                               <span class="text">
+                                    <span class="icon" :class=nav.icon></span>
+                                    <span>{{nav.name}}</span>
+                              </span>
+                           </router-link>
+                       </li>
+                </ul>
         </div>
     </div>
 </div>
@@ -65,14 +30,67 @@
 <script>
 export default {
     name: 'layoutAside',
+    data() {
+        return {
+            navLinkActived:0,
+            navLinks:[
+              {
+                'name':'全部文件',
+                'icon':'icon-disk',
+                'path':'/all'
+              },
+                {
+                'name':'图片',
+                'path':'/picture/timeline'
+              },
+                {
+                'name':'文档',
+                'path':'/document'
+              },
+                {
+                'name':'视频',
+                'path':'/video'
+              },
+                {
+                'name':'种子',
+                'path':'/bt'
+              },
+                {
+                'name':'音乐',
+                'path':'/music'
+              },
+                {
+                'name':'其他',
+                'path':'/other'
+              },
+                {
+                'name':'我的分享',
+                'icon':'icon-my-share',
+                'path':'/share'
+              },
+              {
+                'name':'回收站',
+                'icon':'icon-delete',
+                'path':'/recycled'
+              }
+            ]
+        }
+    },
+    conmputed:{
+       
+    },
+    methods:{
+      
+    }
 }
 </script>
 
 <style lang="less" scoped>
+
+
 @import "../../assets/less/disk.header.less";
 @import "../../assets/less/home-all.less";
 /*扩容*/
-
 .QGOvsxb .quota-over-tips {
     position: absolute;
     width: 172px;
