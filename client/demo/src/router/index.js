@@ -42,7 +42,7 @@ const router = new VueRouter({
       children: [
         {
           path: 'all',
-          name: "all",
+          name: "全部文件",
           component: All
         },
         {
@@ -135,4 +135,11 @@ const router = new VueRouter({
     }
   ]
 })
+
+
+router.beforeEach((to, from, next) => {
+  document.title = '西门互联-' + to.name || '西门互联-文件管理系统';
+  next();
+});
+
 export default router;

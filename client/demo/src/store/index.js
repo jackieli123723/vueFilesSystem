@@ -6,14 +6,12 @@ Vue.use(Vuex);
 //Vuex配置
 
 const store = new Vuex.Store({
-    // strict: process.env.NODE_ENV !== 'production',
     state: {
-            domain:'http://static.lilidong.cn', //保存后台请求的地址，修改时方便（比方说从测试服改成正式服域名）
             userInfo: { //保存用户信息
               name: null,
-              theme:"disk",
+              theme:"beach", //默认推荐beach 注入皮肤的less
               level:0,
-              isAdmin:false
+              isAdmin:false,
             },
             gameInfo:{//游戏信息
              gameId:null,

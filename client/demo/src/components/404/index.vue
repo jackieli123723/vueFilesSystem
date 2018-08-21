@@ -30,4 +30,7 @@ export default {
 
 @import "../../assets/less/error.less";
 
+html{
+    background:red
+}
 </style>

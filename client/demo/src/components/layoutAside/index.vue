@@ -88,8 +88,7 @@ export default {
 <style lang="less" scoped>
 
 
-@import "../../assets/less/disk.header.less";
-@import "../../assets/less/home-all.less";
+
 /*扩容*/
 .QGOvsxb .quota-over-tips {
     position: absolute;

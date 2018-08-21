@@ -124,6 +124,14 @@
         </div>
       </div> -->
 
+<!-- // 失败 有关闭按钮 -->
+<!-- <div class="module-yun-tip red-yun-tips" style="top: 74px; left: 50%; margin-left: -105.5px;">
+  <div class="tip-inner">
+    <span class="tip-icon icon icon-tips-caution"></span>
+    <span class="tip-msg">操作过于频繁，请稍后再试</span>
+    <span class="tip-close tip-icon icon icon-tips-close"></span>
+  </div>
+</div> -->
 
    <!-- 选好主题的弹出框 -->
     <!--   <div class="b-panel theme-b-dialog theme-alert-dialog header-theme-alert-dialog not-save-dialog" style="left: 592px; top: 80.5px; display: block;">
@@ -155,7 +163,7 @@
 
 
    <!--  主题弹出框 -->
-    <div :class="{'checked':themeBoxSwitch == true}" class="b-panel theme-b-dialog theme-alert-dialog header-theme-alert-dialog theme-panel" 
+    <div :class="{'checked fadeInUp':themeBoxSwitch == true}" class="theme-animated  b-panel theme-b-dialog theme-alert-dialog header-theme-alert-dialog theme-panel" 
     >
     <div class="dlg-hd b-rlv" style="display: none;">
         <div title="关闭" id="_disk_id_7" class="dlg-cnr dlg-cnr-r icon icon-close"></div>
@@ -215,10 +223,10 @@
     </div>
     <div class="dlg-ft b-rlv">
         <div class="theme-alert-dialog-commands clearfix center">
-            <a href="javascript:;" @click="hideThemeBox" id="_disk_id_8" class="sbtn okay" >
+            <a href="javascript:;" @click="hideThemeBoxSure" id="_disk_id_8" class="sbtn okay" >
                 <b>确定</b>
             </a>
-            <a href="javascript:;" @click="hideThemeBox" id="_disk_id_9" class="dbtn cancel">
+            <a href="javascript:;" @click="hideThemeBoxCancel" id="_disk_id_9" class="dbtn cancel">
                 <b>取消</b>
             </a>
         </div>
@@ -267,6 +275,10 @@
 </template>
 
 <script>
+
+import {sessionStorageSave} from '../../utils/storage.js'
+
+
 export default {
   name: "layoutHeader",
   data(){
@@ -274,8 +286,8 @@ export default {
         personLayer:false,
         level:2,//0,1,2 账号等级可根据文件个数 定义10 50 100
         avatr:"https://ss0.bdstatic.com/7Ls0a8Sm1A5BphGlnYG/sys/portrait/item/1988db14.jpg",
-        themeActivedId:0,
-        themeTypeName:"white",
+        themeActivedId:7,
+        themeTypeName:"beach",
         themeActivedIdSmallImg: require('../../assets/theme/white/demo.png'),
         themeBoxSwitch:false,
         themeData:[
@@ -347,7 +359,8 @@ export default {
     }
   },
   mounted(){
- 
+//    let theme = sessionStorageFetch("theme")
+//    alert(theme)
   },
 
   methods:{
@@ -363,8 +376,32 @@ export default {
     openThemeBox(){
      this.themeBoxSwitch = !this.themeBoxSwitch
     },
-    hideThemeBox(){
+    hideThemeBoxCancel(){
      this.themeBoxSwitch = !this.themeBoxSwitch
+    },
+    hideThemeBoxSure(){
+     this.themeBoxSwitch = !this.themeBoxSwitch
+     //注入css
+    
+    //保证最后一个的删除在注入
+    // let len = document.getElementsByTagName("head")[0].getElementsByTagName('link')
+    // if(document.getElementsByTagName('link')[len-1].href="[object Object]"){
+    //   document.getElementsByTagName("head")[0].removeChild(document.getElementsByTagName('link')[len-1]);
+    // }
+
+     this.writeStyleTheme(this.themeTypeName)
+    },
+      //换肤  
+    writeStyleTheme(themeType){
+        let url = require('../../assets/theme/'+themeType+'/diskSystem-theme.less')
+        return new Promise(() => {
+            let link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.type = "text/css";
+            link.dataset.theme = this.themeTypeName;
+            link.href = url;
+            document.getElementsByTagName("head")[0].appendChild(link);
+        });
     },
     changeTheme(){
     
@@ -372,6 +409,10 @@ export default {
     updateTheme(themeName,index){
       this.themeTypeName = themeName
       this.themeActivedId = index
+      sessionStorageSave('userInfo',{
+          theme:themeName
+      })
+    this.writeStyleTheme(this.themeTypeName)
     },
     themePreviewImg(theme){
      return require('../../assets/theme/'+theme+'/demo.png')
@@ -399,9 +440,10 @@ export default {
 
 <style lang="less" scoped>
 
-@import "../../assets/less/disk.header.less";
-@import "../../assets/less/context-all.less";
-@import "../../assets/less/disk.theme.less";
+// @import "../../assets/less/disk.header.less";
+// @import "../../assets/less/context-all.less";
+// @import "../../assets/less/disk.theme.less";
+
 .xtJbHcb .OMDFeH.level-0 .desc-arrow {
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
@@ -422,5 +464,80 @@ export default {
     display: block;
 }
 
+.fadeInUp {
+    -webkit-animation-name: fadeInUp;
+    animation-name: fadeInUp
+}
 
+.fadeOutDown {
+    -webkit-animation-name: fadeOutDown;
+    animation-name: fadeOutDown
+}
+
+.theme-animated {
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both
+}
+
+@-webkit-keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0,100%,0);
+        transform: translate3d(0,100%,0)
+    }
+
+    100% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0,100%,0);
+        -ms-transform: translate3d(0,100%,0);
+        transform: translate3d(0,100%,0)
+    }
+
+    100% {
+        opacity: 1;
+        -webkit-transform: none;
+        -ms-transform: none;
+        transform: none
+    }
+}
+
+@-webkit-keyframes fadeOutDown {
+    0% {
+        opacity: 1
+    }
+
+    100% {
+        opacity: 0;
+        -webkit-transform: translate3d(0,100%,0);
+        transform: translate3d(0,100%,0)
+    }
+}
+
+@keyframes fadeOutDown {
+    0% {
+        opacity: 1
+    }
+
+    100% {
+        opacity: 0;
+        -webkit-transform: translate3d(0,100%,0);
+        -ms-transform: translate3d(0,100%,0);
+        transform: translate3d(0,100%,0)
+    }
+}
+
+.fadeOutDown {
+    -webkit-animation-name: fadeOutDown;
+    animation-name: fadeOutDown
+}
 </style>
