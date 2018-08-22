@@ -13,6 +13,7 @@ fs.writeFileSync(path.join(__dirname, './config/env.js'), `export default '${env
 const BASE_URL = '/';
 
 module.exports = {
+    // baseUrl: process.env.OSS_URL ? process.env.OSS_URL : '/print/',
     baseUrl: BASE_URL,
     chainWebpack: config => {
         config.resolve.alias
@@ -21,4 +22,9 @@ module.exports = {
             .set('_conf', resolve('config'));
     },
     productionSourceMap: false,
+    // lintOnSave: false,
+    devServer:{
+        open:true,
+        // port:8888 不开启配置默认8080
+    }
 };

@@ -1,0 +1,297 @@
+/**
+ * @file 列表页主题
+ * @author: yuanchengyong@baidu.com
+ * @date: 16/7/28
+ */
+/*背景
+background-color: #866eb9;
+background-hover: #987cd2;
+background-hover: #987cd2;
+background-border: #af98e2;
+ */
+.frame-all {
+    background-color: #866eb9;
+    background-image: url(./main_bg.jpg);
+    background-position: center 0;
+    background-repeat: no-repeat;
+            background-size: cover;
+    -webkit-background-size: cover;
+         -o-background-size: cover;
+}
+.frame-all .skin-main {
+    position: fixed;
+    _position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='./main_bg.jpg', sizingMethod='scale');
+}
+/*头部下拉列表链接颜色*/
+.module-header-wrapper .xtJbHcb .QgxQAN a {
+    color: #424e67;
+}
+/*头部下拉列表链接颜色*/
+/*免费领取*/
+.module-aside.DtJtsC .JGDHAe {
+    background-color: #fff;
+    color: #3b8cff;
+        filter: alpha(opacity=80);
+    -moz-opacity: .8;
+         opacity: .8;
+    /*border: 1px solid #3b8cff;*/
+}
+.module-aside.DtJtsC .EsbcNG {
+    background: #fff;
+    border: 1px solid #f8e4e3;
+}
+.module-aside.DtJtsC .EsbcNG .HEIExKb {
+    color: #f54240;
+    font-size: 14px;
+}
+.module-aside.DtJtsC .EsbcNG .yQzHsOb {
+    display: block;
+    background: #f54240;
+    color: #fff;
+    border: 1px solid #f54240;
+    border-radius: 10px;
+    text-align: center;
+}
+/*左下角logo*/
+.module-aside.DtJtsC .feNMdtb .KzGbKPb a {
+    color: #fff;
+}
+.module-aside.DtJtsC .feNMdtb .FfOIzbb .bsBdCxb a {
+    color: #666;
+}
+.module-aside.DtJtsC .feNMdtb .KzGbKPb a:hover,
+.module-aside.DtJtsC .feNMdtb .FfOIzbb .bsBdCxb a:hover {
+    filter: alpha(opacity=70);
+    -moz-opacity: .7;
+         opacity: .7;
+}
+/*扩容按钮*/
+.module-aside.DtJtsC .QGOvsxb .GELdyA a {
+    border-radius: 20px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.1);
+}
+.module-aside.DtJtsC .QGOvsxb .GELdyA a:hover {
+    border-radius: 20px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.1);
+}
+/*头部按钮*/
+.DxdbeCb .g-button:link,
+.g-button:visited {
+    color: #866eb9;
+}
+.DxdbeCb .g-button {
+    border: 1px solid #af98e2;
+}
+.DxdbeCb .g-disabled .g-button-right {
+    color: #af98e2;
+}
+.DxdbeCb .g-button:hover {
+    color: #987cd2!important;
+    /*border: 1px solid #987cd2;*/
+}
+.DxdbeCb .g-button:hover .icon {
+    color: #987cd2;
+}
+.DxdbeCb .g-button-blue {
+    border: 1px solid #866eb9;
+    background-color: #866eb9;
+}
+.DxdbeCb .g-button-blue .icon {
+    color: #fff;
+}
+.DxdbeCb .g-button-blue:hover {
+    background: #987cd2;
+    border: 1px solid #987cd2;
+}
+.DxdbeCb .g-button-blue:hover .icon {
+    color: #fff;
+}
+/*头部下拉*/
+.DxdbeCb .g-dropdown-button.button-open .menu {
+    border-color: #af98e2;
+    top: -1px;
+}
+.DxdbeCb .g-dropdown-button.button-open .g-button-menu,
+.DxdbeCb .g-dropdown-button.button-open .g-button-menu a {
+    color: #866eb9;
+}
+/*箭头颜色*/
+
+.NHcGw .AuPKyz .EOGexf .NbKJexb,
+.BNfIyPb .cEefyz .EOGexf .checkgridsmall,
+.xGLMIab .fydGNC .NbKJexb {
+    color: #866eb9;
+}
+.dialog-unzip-list .xGLMIab .fydGNC .NbKJexb {
+    color: #3b8cff;
+}
+/*列表内部hover*/
+.KPDwCE .NHcGw .sybxeNb .g-button {
+    color: #866eb9;
+}
+.KPDwCE .NHcGw .sybxeNb a.g-button:hover .icon {
+    color: #987cd2;
+}
+.KPDwCE .NHcGw .g-dropdown-button .menu {
+    border: 1px solid #af98e2;
+}
+.KPDwCE .NHcGw .g-dropdown-button .menu .g-button-menu {
+    color: #866eb9;
+}
+.NHcGw .open-enable .file-name a:hover,
+.NHcGw .open-enable .file-name a:active,
+.BNfIyPb .cEefyz.open-enable .file-name a:hover,
+.BNfIyPb .cEefyz.open-enable .file-name a:active {
+    color: #866eb9;
+}
+.FuIxtL a,
+.FuIxtL .EKIHPEb,
+.FuIxtL .KLxwHFb {
+    color: #866eb9;
+}
+/*空文件,上下箭头，新建文件夹*/
+.aGMvFtb .ggEQwFb span,
+.xGLMIab .JFaAINb .aHEytd,
+.xGLMIab .MCGAxG .sFxCFbb,
+.ExFGye .icon {
+    color: #866eb9;
+}
+.ExFGye .GadHyA {
+    border: 1px solid #af98e2;
+}
+.ExFGye .GadHyA:focus {
+    -webkit-box-shadow: 0 0 5px 0 #866eb9;
+    -moz-box-shadow: 0 0 5px 0 #866eb9;
+    box-shadow: 0 0 5px 0 #866eb9;
+}
+.aGMvFtb .ggEQwFb span:hover {
+    color: #987cd2;
+}
+/*右上角切换*/
+.DxdbeCb .EzLavy .sDwvAgb {
+    border: 1px solid #af98e2;
+}
+.DxdbeCb .EzLavy .vAFAFF {
+    color: #866eb9;
+}
+.DxdbeCb .OFaPaO .gHHsaL:hover {
+    color: #866eb9;
+}
+/*底部版权*/
+.discovery-main-box .dis-footer,
+.discovery-main-box .dis-footer a {
+    color: #fff;
+}
+.discovery-main-box .dis-footer a:hover {
+    color: #fff;
+    text-decoration: none;
+    opacity: .8;
+    filter: alpha(opacity=80);
+}
+/*最近上传*/
+.DxdbeCb .EQBfLM .AbMfvg {
+    color: #866eb9;
+    border: 1px solid #af98e2;
+}
+.DxdbeCb .EQBfLM .selected {
+    color: #fff;
+    background: #866eb9;
+    border: 1px solid #af98e2;
+}
+.KPDwCE .g-button:link,
+.g-button:visited  {
+    color: #866eb9;
+}
+.KPDwCE .g-button {
+    border: 1px solid #af98e2;
+}
+.KPDwCE .g-disabled .g-button-right {
+    color: #af98e2;
+}
+.KPDwCE .g-button:hover {
+    color: #987cd2!important;
+    /*border: 1px solid #fb70aa;*/
+}
+.KPDwCE .g-button:hover .icon {
+    color: #987cd2;
+}
+.KPDwCE .g-dropdown-button.button-open .menu {
+    border-color: #af98e2;
+}
+.KPDwCE .g-dropdown-button.button-open .g-button-menu,
+.KPDwCE .g-dropdown-button.button-open .g-button-menu a {
+    color: #866eb9;
+}
+/*左侧选中太*/
+.module-aside .fOHAbxb a:hover,
+.FvBGOQ a:hover,
+.JKEQDvb a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#22FFFFFF,endColorstr=#22FFFFFF);
+}
+
+.module-aside .fOHAbxb .bHzsaPb a {
+    background: rgba(255, 255, 255, 0.15);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#22FFFFFF,endColorstr=#22FFFFFF);
+}
+
+.module-header-wrapper .xtJbHcb .gOIbzPb .BHgeMdb {
+    color: #ffd821;
+    font-style: normal;
+}
+/*底部版权*/
+.discovery-main-box .dis-footer,
+.discovery-main-box .dis-footer a {
+    color: #fff;
+}
+.discovery-main-box .dis-footer a:hover {
+    color: #fff;
+    text-decoration: none;
+    opacity: .8;
+    filter: alpha(opacity=80);
+}
+/*卡包换肤*/
+.guxIfyb .QHsbws span {
+    border: 1px solid #866eb9;
+    background-color: #866eb9;
+}
+.guxIfyb .QHsbws span:hover {
+   background: #987cd2;
+   border: 1px solid #987cd2;
+   
+   
+}
+.dQFtEv .guxIfyb .uvPxIIb .checkgridsmall {
+    color: #866eb9;
+}
+.guxIfyb .JABOEMb {
+    border: 2px solid #866eb9;
+}
+.cardDetail .right-content .card-detail .card-item .edit-button {
+    color: #866eb9;
+}
+.cardDetail .right-content .card-detail .card-item .sure {
+    background-color: #866eb9;    
+}
+.cardDetail .right-content .card-detail .card-item .cancel {
+    border: 1px solid #866eb9;
+    color: #866eb9;    
+}
+.cardHolder-container .ExFGye .GadHyA {
+    border: 1px solid #af98e2;
+}
+.cardHolder-container .ExFGye .icon {
+    color: #866eb9;
+}
+.cardHolder-container .ExFGye .GadHyA:focus {
+    -webkit-box-shadow: 0 0 5px 0 #987cd2;;
+    -moz-box-shadow: 0 0 5px 0 #987cd2;;
+    box-shadow: 0 0 5px 0 #987cd2;
+}

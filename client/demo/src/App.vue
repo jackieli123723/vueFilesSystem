@@ -1,5 +1,5 @@
 <template>
-  <div class="frame-all" id="app">
+  <div class="frame-all beach" id="app">
        <div class="skin-main"></div>
        <router-view></router-view>
   </div>

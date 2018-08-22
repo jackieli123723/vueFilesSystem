@@ -18,10 +18,12 @@ const store = new Vuex.Store({
              gameIdCurrentIcon:null,
              gameTopList:(JSON.parse(window.sessionStorage.getItem("gameInfo"))) ? (JSON.parse(window.sessionStorage.getItem("gameInfo")).gameTopList) : []
             },
+            fileInputFlag:false, //新建文件夹和重命名状态
             delConfirmFlag:false, //删除弹出层状态
             countLoading:false //订单遮罩
     },
     getters: {
+        fileInputFlag: state=> state.fileInputFlag,
         delConfirmFlag: state=> state.delConfirmFlag,
         countLoading: state=> state.countLoading,
         gameInfo: state=> state.gameInfo,
@@ -30,6 +32,9 @@ const store = new Vuex.Store({
         }
     },
     mutations: {//类型（名字）+处理函数 大写
+          updateFileInputFlag(state, fileInputFlag){
+            state.fileInputFlag = fileInputFlag;
+          },
           updateDelfirmFlag(state, delConfirmFlag){
             state.delConfirmFlag = delConfirmFlag;
           },

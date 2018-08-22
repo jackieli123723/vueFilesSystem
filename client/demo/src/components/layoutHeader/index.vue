@@ -84,54 +84,9 @@
 
 
 
-      <!-- 成功 -->
-   <!--    <div class="yun-header-tip-box" style="display: -none;">
-        <div class="yun-header-tip success">
-        <i class="yun-header-tip-icon icon icon-tips-success"></i>
-        <span class="yun-header-tip-msg">皮肤应用成功！</span>
-        </div>
-      </div> -->
-       
-      <!--  正在 -->
-
-   <!-- <div class="yun-header-tip-box" style="display: -none;">
-        <div class="yun-header-tip success">
-        <i class="yun-header-tip-icon icon icon-tips-success"></i>
-        <span class="yun-header-tip-msg">皮肤应用成功！</span>
-        </div>
-      </div> -->
-<!-- 
-       失败 -->
-
-    <!--    <div class="module-yun-tip red-yun-tips" style="top: 74px;left: 50%;margin-left: -119px;opacity: 1;/* display: none; */">
-           <div class="tip-inner">
-           <span class="tip-icon icon icon-tips-caution"></span>
-           <span class="tip-msg">不能将文件移动到自身或其子目录下</span>
-           </div>
-       </div> -->
-
-     <!--   <div class="module-yun-tip" style="top: 74px; left: 50%; margin-left: -48px; opacity: 1; ">
-           <div class="tip-inner">
-           <span class="tip-icon icon icon-tips-success"></span>
-           <span class="tip-msg">重命名成功</span>
-           </div>
-       </div> -->
-
-      <!--  <div class="yun-header-tip-box" style="display: -none;">
-        <div class="yun-header-tip success">
-        <i class="yun-header-tip-icon icon icon-tips-success"></i>
-        <span class="yun-header-tip-msg">皮肤应用成功！</span>
-        </div>
-      </div> -->
-
-<!-- // 失败 有关闭按钮 -->
-<!-- <div class="module-yun-tip red-yun-tips" style="top: 74px; left: 50%; margin-left: -105.5px;">
-  <div class="tip-inner">
-    <span class="tip-icon icon icon-tips-caution"></span>
-    <span class="tip-msg">操作过于频繁，请稍后再试</span>
-    <span class="tip-close tip-icon icon icon-tips-close"></span>
-  </div>
-</div> -->
+      <!-- 顶部弹出 -->
+      <Toast  />
+   
 
    <!-- 选好主题的弹出框 -->
     <!--   <div class="b-panel theme-b-dialog theme-alert-dialog header-theme-alert-dialog not-save-dialog" style="left: 592px; top: 80.5px; display: block;">
@@ -163,7 +118,9 @@
 
 
    <!--  主题弹出框 -->
-    <div :class="{'checked fadeInUp':themeBoxSwitch == true}" class="theme-animated  b-panel theme-b-dialog theme-alert-dialog header-theme-alert-dialog theme-panel" 
+    <!-- <div :class="{'checked fadeInUp theme-animated':themeBoxSwitch == true}" class="b-panel theme-b-dialog theme-alert-dialog header-theme-alert-dialog theme-panel" 
+    > -->
+       <div :class="[themeBoxSwitch == true ? 'checked fadeInUp ' : 'fadeOutDown ']" class="theme-animated b-panel theme-b-dialog theme-alert-dialog header-theme-alert-dialog theme-panel" 
     >
     <div class="dlg-hd b-rlv" style="display: none;">
         <div title="关闭" id="_disk_id_7" class="dlg-cnr dlg-cnr-r icon icon-close"></div>
@@ -278,9 +235,14 @@
 
 import {sessionStorageSave} from '../../utils/storage.js'
 
+import Toast from '../common/toast'
+
 
 export default {
   name: "layoutHeader",
+  components:{
+    Toast,
+  },
   data(){
     return {
         personLayer:false,
@@ -389,16 +351,20 @@ export default {
     //   document.getElementsByTagName("head")[0].removeChild(document.getElementsByTagName('link')[len-1]);
     // }
 
-     this.writeStyleTheme(this.themeTypeName)
+    this.writeStyleTheme(this.themeTypeName)
     },
       //换肤  
     writeStyleTheme(themeType){
-        let url = require('../../assets/theme/'+themeType+'/diskSystem-theme.less')
+        // let url = require('../../assets/theme/'+themeType+'/diskSystem-theme.less')
+        // let url = 'https://yun.baidu.com/box-static/disk-theme/theme/'+themeType+'/diskSystem-theme.css'
+         let url = '/theme/'+themeType+'/diskSystem-theme.css'
+        let cssTag = document.getElementById('changeTheme');
+        if(cssTag)  document.getElementsByTagName("head")[0].removeChild(cssTag);
         return new Promise(() => {
             let link = document.createElement("link");
             link.rel = "stylesheet";
             link.type = "text/css";
-            link.dataset.theme = this.themeTypeName;
+            link.id = 'changeTheme';
             link.href = url;
             document.getElementsByTagName("head")[0].appendChild(link);
         });
@@ -460,8 +426,13 @@ export default {
     border-right: 10px solid transparent;
     border-bottom: 10px solid #dd6966;
 }
+
+.theme-b-dialog{
+   bottom:-310px;
+}
 .theme-b-dialog.checked{
     display: block;
+    bottom:0;
 }
 
 .fadeInUp {
@@ -471,7 +442,7 @@ export default {
 
 .fadeOutDown {
     -webkit-animation-name: fadeOutDown;
-    animation-name: fadeOutDown
+    animation-name: fadeOutDown;
 }
 
 .theme-animated {
@@ -481,19 +452,6 @@ export default {
     animation-fill-mode: both
 }
 
-@-webkit-keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        -webkit-transform: translate3d(0,100%,0);
-        transform: translate3d(0,100%,0)
-    }
-
-    100% {
-        opacity: 1;
-        -webkit-transform: none;
-        transform: none
-    }
-}
 
 @keyframes fadeInUp {
     0% {
@@ -511,33 +469,15 @@ export default {
     }
 }
 
-@-webkit-keyframes fadeOutDown {
-    0% {
-        opacity: 1
-    }
-
-    100% {
-        opacity: 0;
-        -webkit-transform: translate3d(0,100%,0);
-        transform: translate3d(0,100%,0)
-    }
-}
-
 @keyframes fadeOutDown {
     0% {
-        opacity: 1
+       bottom:-310px;
     }
 
     100% {
-        opacity: 0;
-        -webkit-transform: translate3d(0,100%,0);
-        -ms-transform: translate3d(0,100%,0);
-        transform: translate3d(0,100%,0)
+        bottom:0
     }
 }
 
-.fadeOutDown {
-    -webkit-animation-name: fadeOutDown;
-    animation-name: fadeOutDown
-}
+
 </style>

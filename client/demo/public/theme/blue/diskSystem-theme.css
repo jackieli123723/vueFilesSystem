@@ -1,0 +1,189 @@
+/**
+ * @file 列表页主题
+ * @author: yangyang55@baidu.com
+ * @date: 16/7/29
+ */
+ /*
+背景灰：#e9eef1
+*头部蓝：#3b8cff
+白色字：#fff
+蓝色：#3b8cff
+*/
+.frame-all {
+    background: #e9eef1;
+}
+.module-header .module-header-wrapper {
+    background: #3b8cff;
+}
+.frame-main {
+    background: #fff;
+}
+.frame-all .skin-main {
+}
+/*按钮-顶部*/
+.g-button:link,
+.g-button:visited {
+    color: #3b8cff;
+}
+.g-button {
+    color: #3b8cff;
+}
+.g-button:hover {
+    color: #77afff!important;
+}
+.g-button:hover .icon {
+    color: #77afff;
+}
+.g-button-blue {
+    border: 1px solid #3b8cff;
+    background-color: #3b8cff;
+}
+.g-button-blue .icon {
+    color: #fff;
+}
+.g-button-blue:hover {
+    background: #77afff;
+    border: 1px solid #77afff;
+}
+.g-button-blue:hover .icon {
+    color: #fff;
+}
+/*顶部文字颜色*/
+
+.module-header-wrapper .xtJbHcb .CDaavKb a {
+    color: #fff;
+}
+.module-header-wrapper .xtJbHcb .gOIbzPb,
+.module-header-wrapper .xtJbHcb .CDaavKb {
+    color: #fff;
+}
+.module-header-wrapper .xtJbHcb .vyQHNyb .cMEMEF a {
+    color: #fff;
+}
+.module-header-wrapper .xtJbHcb .vyQHNyb .wGMtMgb a {
+    color: #fff;
+}
+.module-header-wrapper .xtJbHcb .vyQHNyb .wGMtMgb .gICyHO {
+    background: #fff;
+}
+.module-header-wrapper .xtJbHcb .CDaavKb .KQcHyA {
+    color: #d07d12;
+    background: #ffd821;
+}
+.module-header-wrapper .xtJbHcb .gOIbzPb .BHgeMdb {
+    color: #ffd821;
+    font-style: normal;
+}
+.module-header-wrapper .xtJbHcb .CDaavKb .KQcHyA:hover {
+    background: #f3cd1b;
+}
+.module-header-wrapper .xtJbHcb .Ebdyswb {
+    border-left: 1px solid #fff;
+}
+.module-header-wrapper .xtJbHcb .PvsOgyb .QgxQAN a {
+    color: #424e67;
+}
+/*头部卡片*/
+.module-header-wrapper .xtJbHcb .OMDFeH {
+    color: #fff;
+}
+.module-header-wrapper .xtJbHcb .PvsOgyb .eQyIbEb {
+    color: #d07d12;
+    background: #ffd821;
+}
+.module-header-wrapper .xtJbHcb .PvsOgyb .eQyIbEb:hover {
+    background-color: #f3cd1b;
+}
+/*下拉*/
+.g-dropdown-button.button-open .menu {
+    border-color: #c0d9fe;
+    top: -1px;
+}
+.g-dropdown-button.button-open .g-button-menu {
+    color: #3b8cff;
+}
+.g-dropdown-button.button-open .g-button-menu a {
+    color: #3b8cff;
+}
+.module-header-wrapper .xtJbHcb .PvsOgyb .QgxQAN {
+    color: #303030;
+}
+/*左侧栏*/
+.module-aside.DtJtsC .fOHAbxb a {
+    color: #424e67;
+}
+.module-aside.DtJtsC .fOHAbxb .bHzsaPb a {
+    color: #3b8cff;
+}
+.FvBGOQ a .g-button-right,
+.JKEQDvb a .g-button-right,
+.FvBGOQ a:hover .g-button-right,
+.JKEQDvb a:hover .g-button-right {
+    color: #424e67;
+}
+.FvBGOQ a .g-button-right em,
+.JKEQDvb a .g-button-right em,
+.FvBGOQ a:hover .g-button-right em,
+.JKEQDvb a:hover .g-button-right em {
+    color: #424e67;
+}
+.module-aside.DtJtsC .QGOvsxb .tDuODs {
+    color: #424e67;
+}
+.module-aside.DtJtsC .feNMdtb .FfOIzbb .bsBdCxb a,
+.module-aside.DtJtsC .feNMdtb .KzGbKPb a {
+    color: #b2bbcc;
+}
+.module-aside.DtJtsC .feNMdtb .FfOIzbb .bsBdCxb a {
+    color: #666;
+}
+.module-aside.DtJtsC .feNMdtb .KzGbKPb a:hover {
+    color: #d5dae3;
+}
+.module-aside.DtJtsC .feNMdtb .FfOIzbb .bsBdCxb a:hover {
+    filter: alpha(opacity=70);
+    -moz-opacity: .7;
+         opacity: .7;
+}
+.module-aside.DtJtsC .QGOvsxb .GELdyA a {
+    border: none;
+    color: #3b8cff;
+    background: none;
+    text-align: right;
+}
+.module-aside.DtJtsC .QGOvsxb .GELdyA a:hover {
+    border: none;
+    color: #3b8cff;
+    background: none;
+}
+/*免费领取*/
+.module-aside.DtJtsC .JGDHAe {
+    background-color: rgba(59, 140, 255, 0.1);
+    color: #3b8cff;
+/*        filter: alpha(opacity=90);
+    -moz-opacity: .9;
+         opacity: .9;*/
+    border: 1px solid #3b8cff;
+}
+.module-aside.DtJtsC .EsbcNG {
+    background: #fff;
+    border: 1px solid #f8e4e3;
+}
+.module-aside.DtJtsC .EsbcNG .HEIExKb {
+    color: #f54240;
+    font-size: 14px;
+}
+.module-aside.DtJtsC .EsbcNG .yQzHsOb {
+    display: block;
+    background: #f54240;
+    color: #fff;
+    border: 1px solid #f54240;
+    border-radius: 10px;
+    text-align: center;
+}
+/*content边框*/
+#layoutMain {
+    right: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}

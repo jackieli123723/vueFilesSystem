@@ -29,19 +29,25 @@ export default {
   },
   mounted(){
     //  alert( sessionStorageFetch('userInfo').theme)
-   this.writeStyleTheme(this.themeTypeName)
+    this.writeStyleTheme(this.themeTypeName)
   },
   methods:{
     //换肤 注入初始化 
+        
     writeStyleTheme(themeType){
-        let url = require('../../assets/theme/'+themeType+'/diskSystem-theme.less')
-        let link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.type = "text/css";
-        link.dataset.theme = this.themeTypeName;
-        link.href = url;
-        return document.getElementsByTagName("head")[0].appendChild(link);
-    }
+        // let url = require('../../assets/theme/'+themeType+'/diskSystem-theme.less')
+        let url = '/theme/'+themeType+'/diskSystem-theme.css'
+        let cssTag = document.getElementById('changeTheme');
+        if(cssTag) document.getElementsByTagName("head")[0].removeChild(cssTag);
+        return new Promise(() => {
+            let link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.type = "text/css";
+            link.id = 'changeTheme';
+            link.href = url;
+            document.getElementsByTagName("head")[0].appendChild(link);
+        });
+    },
   }
 }
 </script>
