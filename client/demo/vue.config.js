@@ -25,6 +25,6 @@ module.exports = {
     // lintOnSave: false,
     devServer:{
         open:true,
-        // port:8888 不开启配置默认8080
+        port:8888 //不开启配置默认8080
     }
 };

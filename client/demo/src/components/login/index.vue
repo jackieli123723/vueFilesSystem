@@ -38,9 +38,7 @@
             </div>
           </div>
         </section>
-        <div class="auth-modal__close js-modal-close">
-          <i class="icon-close"></i>
-        </div>
+
       </div>
     </div>
 

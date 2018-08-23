@@ -17,6 +17,8 @@
 <script>
 import { mapGetters } from 'vuex'
 
+//ExFGye jyabN0g -- 竖屏
+//ExFGye  -- 横屏
 export default {
   name: 'fileinput',
   props: {
