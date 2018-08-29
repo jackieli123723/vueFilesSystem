@@ -7,8 +7,8 @@ export function show_msg(msg, timeOut) {
         return
     }
     clearTimeout(timer);
-    var msg_dis_container = document.createElement("div");
-    var msg_dis_content = document.createElement("div");
+    let msg_dis_container = document.createElement("div");
+    let msg_dis_content = document.createElement("div");
 
     msg_dis_container.id = "msg_dis_container"
     msg_dis_container.style.block = "none";
@@ -32,29 +32,29 @@ export function formatFileSize(fileSize) {
     if (fileSize < 1024) {
         return fileSize + 'B';
     } else if (fileSize < (1024*1024)) {
-        var temp = fileSize / 1024;
+        let temp = fileSize / 1024;
         temp = temp.toFixed(2);
         return temp + 'KB';
     } else if (fileSize < (1024*1024*1024)) {
-        var temp = fileSize / (1024*1024);
+        let temp = fileSize / (1024*1024);
         temp = temp.toFixed(2);
-        return temp + 'MB';
+        return temp + 'M';
     } else {
-        var temp = fileSize / (1024*1024*1024);
+        let temp = fileSize / (1024*1024*1024);
         temp = temp.toFixed(2);
-        return temp + 'GB';
+        return temp + 'G';
     }
 }
 
-//格式化日期
+//格式化日期 注意换算时1000 
  export function formatDate(value) {
-  var date = new Date(value);
-  var year = date.getFullYear();
-  var month = date.getMonth() + 1;
-  var today = date.getDate();
-  var hour = date.getHours();
-  var minute = date.getMinutes();
-  var second = date.getSeconds();
+  let date = new Date(value);
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let today = date.getDate();
+  let hour = date.getHours();
+  let minute = date.getMinutes();
+  let second = date.getSeconds();
 
   if (month < 10) {
       month = "0" + month;
@@ -76,3 +76,25 @@ export function formatFileSize(fileSize) {
 
   return date.getFullYear() + "-"+ month + "-"+ today + " "+ hour+ ":" + minute + ":"+ second;
 }
+
+//文件类型名字
+// fileicon-large-pdf
+// fileicon-small-pdf
+//dir-samll
+//dir-large
+export function formatFileNameType(name,size) {
+    let fileName=name.split("."); 
+    let len=fileName.length; 
+	let str =  len ? fileName[len-1] : ''
+    switch (str){
+        case 'mp4':
+            return `fileicon-${size}-video`;
+            break;
+        case 'pdf':
+            return `fileicon-${size}-pdf`;
+            break;
+        default: ''
+            return `dir-${size}`; //默认文件名        
+    }
+}
+

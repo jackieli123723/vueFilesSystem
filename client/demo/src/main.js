@@ -5,6 +5,14 @@ import store from './store'
 // import '@assets/css/less/cover.less';
 // import './index.less'
 
+
+
+import * as filters from './filters' 
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
+
+
 Vue.config.productionTip = false
 
 

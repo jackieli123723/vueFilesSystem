@@ -135,36 +135,52 @@
 
           <div class="JDeHdxb">
             <span class="EgMMec">全部文件</span>
-            <span class="FcucHsb">已加载101个</span>
-            <ul class="FuIxtL">
+  
+            <span class="FcucHsb">获取更多数据...</span>
+            <!-- <span class="FcucHsb">已加载{{fileDataList.length}}个</span> -->
+           
+           <ul class="FuIxtL" node-type="FuIxtL" style="display: none;">
               <li>
-                <a  href="javascript:;">返回上一级</a>
+                <a data-deep="-1" href="javascript:;">返回上一级</a>
                 <span class="EKIHPEb">|</span></li>
-              <li></li>
+              <li node-type="tbAudfb">
+                <span title="全部文件/360云盘">...</span>
+                <span class="KLxwHFb">&gt;</span>
+                <a href="javascript:;" title="全部文件/360云盘" data-deep="1">360云盘</a>
+                <span class="KLxwHFb">&gt;</span>
+                <a href="javascript:;" title="全部文件/360云盘/test6667" data-deep="2">test6667</a>
+                <span class="KLxwHFb">&gt;</span>
+                <a href="javascript:;" title="全部文件/360云盘/test6667/新建文件夹" data-deep="3">新建文件夹</a>
+                <span class="KLxwHFb">&gt;</span>
+                <span title="全部文件/360云盘/test6667/新建文件夹/新建文件夹">新建文件夹</span></li>
             </ul>
           </div>
 
-          <div class="QxJxtg">
+          <div class="QxJxtg cazEfA">
             <div class="xGLMIab">
 
-              <ul class="QAfdwP tvPMvPb" type="shu屏全选" >
-                <li data-key="name" class="fufHyA yfHIsP" style="width:60%;">
-                  <div node-type="fydGNC" class="Qxyfvg fydGNC ">
-                    <span class="zbyDdwb"></span>
+              <ul class="QAfdwP tvPMvPb" type="竖屏全选" style="display: block;" >
+                <!-- fufHyA yfHIsP EzubGg
+                fufHyA yfHIsP JFaAINb -->
+                <li data-key="name" class="fufHyA yfHIsP JFaAINb" style="width:60%;">
+                  <div class="Qxyfvg fydGNC ">
+                    <span class="zbyDdwb" @click="fileCheckAll"></span>
                     <span class="MIMvNNb">全选</span>
-                    <span class="icon NbKJexb icon-checksmall"></span>
+                    <span class="icon NbKJexb icon-checksmall"  @click="fileCheckAll" v-if="fileCheckAllFlag" style="display:block"></span>
                   </div>
                   <span class="text">文件名</span>
                   <span class="xEuDywb"></span>
                   <span class="icon aHEytd icon-up"></span>
                   <span class="icon sFxCFbb icon-downtitle"></span>
                 </li>
-                <li data-key="size" class="fufHyA" style="width:16%;">
+
+                <li data-key="size" class="fufHyA MCGAxG" style="width:16%;">
                   <span class="text">大小</span>
                   <span class="xEuDywb"></span>
                   <span class="icon aHEytd icon-up"></span>
                   <span class="icon sFxCFbb icon-downtitle"></span>
                 </li>
+                <!-- fufHyA gObdAzb JFaAINb -->
                 <li data-key="time" class="fufHyA gObdAzb MCGAxG" style="width:23%;">
                   <span class="text">修改日期</span>
                   <span class="xEuDywb"></span>
@@ -172,114 +188,49 @@
                   <span class="icon sFxCFbb icon-downtitle"></span>
                 </li>
               </ul>
+
               <ul class="vwCPvP tvPMvPb" type="横屏全选" style="display: block;">
+                <!-- fufHyA yfHIsP -->
                 <li class="fufHyA yfHIsP EzubGg">
-                  <div node-type="fydGNC" class="Qxyfvg fydGNC">
-                    <span class="zbyDdwb"></span>
+                  <div style="width:100px" class="Qxyfvg fydGNC">
+                    <span class="zbyDdwb" style=" background-position: 0px 0px;" @click="fileCheckAll"></span>
                     <span class="MIMvNNb">全选</span>
-                    <span class="icon NbKJexb icon-checksmall"></span>
+                    <span class="icon NbKJexb icon-checksmall"  @click="fileCheckAll" v-if="fileCheckAllFlag" style="display:block"></span>
                   </div>
                 </li>
               </ul>
+               
+        
+               <!-- 默认是none -->
               <div class="FcQMwt global-clearfix">
-                <span class="MdLxwM">已选中0个文件/文件夹</span>
+                <span class="MdLxwM">已选中1110个文件/文件夹</span>
                 <div class="KKtwaH"></div>
               </div>
             </div>
           </div>
           <!-- 竖屏 -->
-          <div class="zJMtAEb" type="竖屏" :class="{'active':fileItemStylePortrait == true}"  >
+          <div class="zJMtAEb" type="竖屏" style="margin-top:110px;" :class="{'active':fileItemStylePortrait == true}"  >
             <div class="NHcGw" style="overflow-y: auto; height: 700px;">
               <div class="vdAfKMb" style="height: auto;">
-                <dd class="g-clearfix AuPKyz open-enable ntX8zG hxyXEoG">
-                  <span  class="EOGexf">
-                    <span class="icon NbKJexb"></span></span>
-                  <div class="qmstXYmX dir-small"></div>
+                <!-- ntX8zG hxyXEoG 伪类做的 fileItemHover ntX8zG 打钩--> 
+                <dd class="g-clearfix AuPKyz"
+                  :class="{' hxyXEoG':filePortraitHoverItemIndex == index,'ntX8zG':file.checked == true}"  
+                    @mouseover="fileHoverItem('portrait',index)"  
+                    @mouseleave="fileHoverItem('portrait',-1)" v-for="(file,index) in fileDataList" :key=index >
+                  <span  class="EOGexf" @click="setFileItemChecked(file,index)">
+                    <span class="icon NbKJexb"></span>
+                  </span>
+                  <div class="qmstXYmX" :class="formatFileName(file.server_filename,'small')"></div>
                   <div class="file-name" style="width:60%">
                     <div class="text">
-                      <a href="javascript:void(0);" class="ipXEev" title="mac-office套件破解">mac-office套件破解</a></div>
-                    <div class="operate">
-                      <div class="button-box-mark" style="display:inline-block;*display:inline;*zoom:1;width:1px;height:1px;line-height:0;"></div>
-                      <div class="x-button-box" style="position: absolute; top: 0px; line-height: normal; visibility: visible; width: 0px; padding-left: 0px; display: block;">
-                        <div style="display:block;width:100%;height:100%;z-index:30;position:absolute;top:0;left:0;"></div>
-                        <a class="g-button" data-button-id="b9" data-button-index="1" href="javascript:;" title="分享" style="display: inline-block;">
-                          <span class="g-button-right">
-                            <em class="icon icon-share" title="分享"></em>
-                            <span class="text" style="width: auto;">分享</span></span>
-                        </a>
-                        <a class="g-button" data-button-id="b11" data-button-index="2" href="javascript:;" title="下载" style="display: inline-block;">
-                          <span class="g-button-right">
-                            <em class="icon icon-download" title="下载"></em>
-                            <span class="text" style="width: auto;">下载</span></span>
-                        </a>
-                        <a class="g-button" data-button-id="b13" data-button-index="4" href="javascript:;" title="移动到" style="display: none;">
-                          <span class="g-button-right">
-                            <span class="text" style="width: auto;">移动到</span></span>
-                        </a>
-                        <a class="g-button" data-button-id="b15" data-button-index="5" href="javascript:;" title="复制到" style="display: none;">
-                          <span class="g-button-right">
-                            <span class="text" style="width: auto;">复制到</span></span>
-                        </a>
-                        <a class="g-button" data-button-id="b17" data-button-index="6" href="javascript:;" title="重命名" style="display: none;">
-                          <span class="g-button-right">
-                            <span class="text" style="width: auto;">重命名</span></span>
-                        </a>
-                        <a class="g-button" data-button-id="b19" data-button-index="7" href="javascript:;" title="删除" style="display: none;">
-                          <span class="g-button-right">
-                            <span class="text" style="width: auto;">删除</span></span>
-                        </a>
-                        <a class="g-button" data-button-id="b21" data-button-index="7" href="javascript:;" title="设置共享" style="display: none;">
-                          <span class="g-button-right">
-                            <em class="icon icon-sharedir" title="设置共享"></em>
-                            <span class="text" style="width: auto;">设置共享</span></span>
-                        </a>
-                        <a class="g-button" data-button-id="b23" data-button-index="7" href="javascript:;" title="取消共享" style="display: none;">
-                          <span class="g-button-right">
-                            <span class="text" style="width: auto;">取消共享</span></span>
-                        </a>
-                        <a class="g-button" data-button-id="b25" data-button-index="7" href="javascript:;" title="退出共享" style="display: none;">
-                          <span class="g-button-right">
-                            <span class="text" style="width: auto;">退出共享</span></span>
-                        </a>
-                        <a class="g-button" data-button-id="b27" data-button-index="8" href="javascript:;" title="详细信息" style="display: none;">
-                          <span class="g-button-right">
-                            <span class="text" style="width: auto;">详细信息</span></span>
-                          <i class="button-red-light-icon"></i>
-                        </a>
-                        <span class="g-dropdown-button tools-more" style="display: inline-block;">
-                          <a class="g-button" data-button-id="b29" data-button-index="" href="javascript:;" title="更多">
-                            <span class="g-button-right">
-                              <em class="icon icon-more" title="更多"></em>
-                              <span class="text" style="width: auto;">更多</span></span>
-                            <i class="button-red-light-icon tools-more-red-light-icon"></i>
-                          </a>
-                          <span class="menu" style="width: 72px;">
-                            <a style="display:none;" data-menu-id="b-menu0" class="g-button-menu g-menu-hasIcon" href="javascript:;">
-                              <em class="icon icon-share"></em>分享</a>
-                            <a style="display:none;" data-menu-id="b-menu1" class="g-button-menu g-menu-hasIcon" href="javascript:;">
-                              <em class="icon icon-download"></em>下载</a>
-                            <a style="display: block;" data-menu-id="b-menu2" class="g-button-menu" href="javascript:;">移动到</a>
-                            <a style="display: block;" data-menu-id="b-menu3" class="g-button-menu" href="javascript:;">复制到</a>
-                            <a style="display: block;" data-menu-id="b-menu4" class="g-button-menu" href="javascript:;">重命名</a>
-                            <a style="display: block;" data-menu-id="b-menu5" class="g-button-menu" href="javascript:;">删除</a>
-                            <a style="display: block;" data-menu-id="b-menu6" class="g-button-menu g-menu-hasIcon" href="javascript:;">
-                              <em class="icon icon-sharedir"></em>设置共享</a>
-                            <a style="display:none;" data-menu-id="b-menu7" class="g-button-menu  g-disabled" href="javascript:;">取消共享</a>
-                            <a style="display:none;" data-menu-id="b-menu8" class="g-button-menu  g-disabled" href="javascript:;">退出共享</a>
-                            <a style="display:none;" data-menu-id="b-menu9" class="g-button-menu  g-disabled" href="javascript:;">详细信息
-                              <i class="button-red-light-icon"></i></a>
-                          </span>
-                        </span>
-                      </div>
-                    </div>
+                      <a href="javascript:void(0);" class="ipXEev">{{file.server_filename}}</a></div>
                   </div>
-                  <div class="bkkqGm0o" style="width:16%">-</div>
-                  <div class="bebpyV" style="width:23%">2017-08-14 18:23</div>
-                  <div class="scmGrE5" style="width:0%">
-                    <span class="pxXozr" node-type="fzsbPj4"></span>
-                  </div>
+                  <div class="bkkqGm0o"  v-if="file.isdir == 1" style="width:16%">-</div>
+                  <div class="bkkqGm0o"  v-if="file.isdir == 0" style="width:16%">{{size(file.size)}}</div>
+                  <div class="bebpyV" style="width:23%">{{time(file.server_mtime)}}</div>
                 </dd>
-                <dd class="g-clearfix AuPKyz open-enable">
+
+                <!-- <dd class="g-clearfix AuPKyz open-enable">
                   <span  class="EOGexf">
                     <span class="icon NbKJexb"></span></span>
                   <div class="qmstXYmX fileicon-small-pdf"></div>
@@ -294,6 +245,7 @@
                     <span class="pxXozr" node-type="fzsbPj4"></span>
                   </div>
                 </dd>
+
                 <dd class="g-clearfix AuPKyz open-enable ntX8zG">
                   <span  class="EOGexf">
                     <span class="icon NbKJexb"></span></span>
@@ -308,85 +260,33 @@
                   <div class="scmGrE5" style="width:0%">
                     <span class="pxXozr" node-type="fzsbPj4"></span>
                   </div>
-                </dd>
+                </dd> -->
 
               </div>
             </div>
           </div>
           <!-- 横屏 -->
-          <div class="fyQgAEb" type="横屏" :class="{'active':fileItemStylePortrait == false}" >
+          <div class="fyQgAEb" type="横屏" style="margin-top:150px;" :class="{'active':fileItemStylePortrait == false}" >
             <div class="BNfIyPb" style="height: 307px; overflow-y: auto;">
               <div class="JKvHJMb" style="height:auto">
                 <dd class="g-clearfix">
-                  <div class="cEefyz open-enable" style="display: block">
-                    <div class="qmstXYmX dir-large" title="">
-                      <img class="wobg5k" style="visibility: hidden;">
-                      <i class="icon-livp" style="display: none;">
-                        <i>
-                        </i>
-                      </i>
+                  <!-- cEefyz open-enable ntX8zG  -->
+                  <div class="cEefyz open-enable ntX8zG" style="display: block" v-for="(file,index) in fileDataList" :key=index>
+                    <div class="qmstXYmX"  :class="formatFileName(file.server_filename,'large')">
                     </div>
                     <div class="file-name">
-                      <a node-type="xoX8rl" class="ipXEev" href="javascript:void(0);" title="hacker">hacker</a></div>
+                      <a  class="ipXEev" href="javascript:void(0);" >{{file.server_filename}}</a></div>
                     <span  class="EOGexf">
                       <span class="icon usXvNX"></span>
                       <span class="icon checkgridsmall"></span></span>
-                  </div>
-                  
-                  <div class="cEefyz open-enable" style="display: block">
-                    <div class="qmstXYmX dir-large" title="">
-                      <img class="wobg5k" style="visibility: hidden;">
-                      <i class="icon-livp" style="display: none;">
-                        <i>
-                        </i>
-                      </i>
-                    </div>
-                    <div class="file-name">
-                      <a node-type="xoX8rl" class="ipXEev" href="javascript:void(0);" title="JavaScript视频教程">JavaScript视频教程</a></div>
-                    <span  class="EOGexf">
-                      <span class="icon usXvNX"></span>
-                      <span class="icon checkgridsmall"></span></span>
-                  </div>
-           
-    
-                  <div class="cEefyz open-enable" style="display: block">
-                    <div class="qmstXYmX dir-large" title="">
-                      <img class="wobg5k" style="visibility: hidden;">
-                      <i class="icon-livp" style="display: none;">
-                        <i>
-                        </i>
-                      </i>
-                    </div>
-                    <div class="file-name">
-                      <a node-type="xoX8rl" class="ipXEev" href="javascript:void(0);" title="电脑备份">电脑备份</a></div>
-                    <span  class="EOGexf">
-                      <span class="icon usXvNX"></span>
-                      <span class="icon checkgridsmall"></span></span>
-                  </div>
-
-                  <div class="cEefyz open-enable" style="display: block">
-                    <div class="qmstXYmX fileicon-sys-l-web" title="">
-                        <img class="wobg5k" style="visibility: hidden;">
-                        <i class="icon-livp" style="display: none;">
-                        <i>
-                        </i>
-                        </i>
-                    </div>
-                    <div class="file-name">
-                        <a node-type="xoX8rl" class="ipXEev" href="javascript:void(0);" title="看不到书签栏？.html">看不到书签栏？.html</a></div>
-                    <span  class="EOGexf">
-                        <span class="icon usXvNX"></span>
-                        <span class="icon checkgridsmall"></span></span>
                   </div>
                 </dd>
               </div>
             </div>
           </div>
-          <!-- loading 动画 -->
-          <Loading  />
-
+          <!-- loading 动画  必须隐藏 否则hover效果失效 -->
+          <!-- <Loading  /> -->
           <!-- 新建文件夹和修改文件夹的弹出层输入框 只能重命名和新建文件类型  -->
-
           <File-Input v-if="fileInputFlag"  :fileNameTitle="fileNameTitle" />
         </div>
       </div>
@@ -400,6 +300,7 @@ import Loading from '../common/loading'
 import FileInput from '../common/fileinput'
 
 import { mapGetters } from 'vuex'
+import {formatFileNameType,formatDate, formatFileSize} from '../../utils/common'
 
 export default {
     name: 'all',
@@ -431,8 +332,80 @@ export default {
             "id":"time"    
            }
         ],
+        fileCheckAllFlag:false,
+        fileCheckItemArr:[],
+        arrItemCheckArr:[],
+        filePortraitHoverItemIndex:-1,
+        fileHorizontalHoverItemIndex:-1,
         fileDataList:[
-
+           {
+            "server_mtime": 1413277988000,
+            "category": 4,
+            "unlist": 0,
+            "fs_id": 269288858274638,
+            "isdir": 1,
+            "oper_id": 0,
+            "server_ctime": 1377494892000,
+            "local_mtime": 1377494892000,
+            "size": 6135798,
+            "share": 0,
+            "md5": "8fae8413ce327111a9a1bd3bb9500973",
+            "path": "/hacker",
+            "local_ctime": 1377494892000,
+            "server_filename": "hacker",
+            "id":1
+          },
+           {
+            "server_mtime": 1413277988000,
+            "category": 4,
+            "unlist": 0,
+            "fs_id": 269288858274638,
+            "isdir": 1,
+            "oper_id": 0,
+            "server_ctime": 1377494892000,
+            "local_mtime": 1377494892000,
+            "size": 6135798,
+            "share": 0,
+            "md5": "8fae8413ce327111a9a1bd3bb9500973",
+            "path": "/demo",
+            "local_ctime": 1377494892000,
+            "server_filename": "demo",
+             "id":2
+          },
+          {
+            "server_mtime": 1413277988000,
+            "category": 4,
+            "unlist": 0,
+            "fs_id": 269288858274638,
+            "isdir": 0,
+            "oper_id": 0,
+            "server_ctime": 1377494892000,
+            "local_mtime": 1377494892000,
+            "size": 6135798,
+            "share": 0,
+            "md5": "8fae8413ce327111a9a1bd3bb9500973",
+            "path": "/使用HTML、CSS和JavaScript开发Android程序.pdf",
+            "local_ctime": 1377494892000,
+            "server_filename": "使用HTML、CSS和JavaScript开发Android程序.pdf",
+            "id":3
+          },
+          {
+            "server_mtime": 1413277988000,
+            "category": 4,
+            "unlist": 0,
+            "fs_id": 269288858274638,
+            "isdir": 0,
+            "oper_id": 0,
+            "server_ctime": 1377494892000,
+            "local_mtime": 1377494892000,
+            "size": 1494727507,
+            "share": 0,
+            "md5": "8fae8413ce327111a9a1bd3bb9500973",
+            "path": "/【银吧公众号：YHDYLM】2016.HD720P.mp4",
+            "local_ctime": 1377494892000,
+            "server_filename": "【银吧公众号：YHDYLM】2016.HD720P.mp4",
+            "id":4
+          }
         ],
         page:1,
         pageSize:10,
@@ -478,6 +451,65 @@ export default {
        emitChanged(){
            this.searchTextFlag = false
            this.searchClearFlag = true
+       },
+       formatFileName(name,size){
+             return formatFileNameType(name,size)
+       },
+       time(time){
+            return formatDate(time)
+       },
+       size(fileSize){
+           return formatFileSize(fileSize)
+       },
+       setFileItemChecked(file,index){
+            if(file.hasOwnProperty("checked")){
+                file.checked = ! file.checked;
+            } else{
+                this.$set(file,"checked",true);
+            }
+            this.fileDataList.forEach((value,index)=>{
+                if(value.hasOwnProperty("checked")){
+                    if(value.checked){
+                        this.arrItemCheckArr.push(1);
+                    }else{
+                        this.arrItemCheckArr.push(-1);
+                    }
+                }else{
+                    this.arrItemCheckArr.push(-1);
+                }
+            });
+            if(this.arrItemCheckArr.join("").indexOf("-1")!=-1){
+                this.fileCheckAllFlag = false;
+                // this.arrItemCheckArr = []
+            }else{
+                this.fileCheckAllFlag = true;
+            }
+        },
+       fileCheckAll(){
+         this.fileCheckAllFlag = !this.fileCheckAllFlag
+         this.fileDataList.forEach((value,index)=>{
+                if(value.hasOwnProperty("checked")){
+                    value.checked = this.fileCheckAllFlag;
+                }else{
+                    this.$set(value,"checked",this.fileCheckAllFlag);
+                }
+            });
+       },
+       fileHoverItem(direction,index){
+        if(direction == 'portrait'){
+           this.filePortraitHoverItemIndex = index
+        }
+
+        if(direction == 'horizontal'){
+          this.fileHorizontalHoverItemIndex = index
+        }
+
+       },
+       fileCheckedItem(id){
+         this.fileCheckItemArr.push(id)
+       },
+       fileCheckIcon(id){
+        return this.fileCheckItemArr.includes(id)
        }
     }
 }
@@ -538,5 +570,31 @@ export default {
 .g-dropdown-button.button-open:hover > .menu {
     visibility: visible;
     display: block;
+}
+
+.xGLMIab .MCGAxG .xEuDywb{
+  background-position: -990px -990px
+}
+
+
+
+.NHcGw .AuPKyz:hover{
+  background: #f6faff;
+  border-bottom: 1px solid #daebfe;
+}
+
+.NHcGw .AuPKyz:hover:before {
+    content: "";
+    border-top: 1px solid #daebfe;
+    position: absolute;
+    top: -1px;
+    display: block;
+    width: 100%;
+    z-index: 1;
+    visibility: visible;
+}
+
+.NHcGw .AuPKyz:hover:first-child:before, .NHcGw .ntX8zG:first-child:before {
+    top: 0;
 }
 </style>

@@ -22,7 +22,7 @@ module.exports = {
             .set('_conf', resolve('config'));
     },
     productionSourceMap: false,
-    // lintOnSave: false,
+    lintOnSave: false,//关闭eslint，
     devServer:{
         open:true,
         port:8888 //不开启配置默认8080
