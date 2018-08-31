@@ -159,7 +159,7 @@
           <div class="QxJxtg cazEfA">
             <div class="xGLMIab">
 
-              <ul class="QAfdwP tvPMvPb" type="竖屏全选" style="display: block;" >
+              <ul class="QAfdwP tvPMvPb" type="竖屏全选" style="display: block;"    >
                 <!-- fufHyA yfHIsP EzubGg
                 fufHyA yfHIsP JFaAINb -->
                 <li data-key="name" class="fufHyA yfHIsP JFaAINb" style="width:60%;">
@@ -296,6 +296,7 @@
           <File-Input 
            v-if="fileInputFlag" 
            :fileNameTitle="fileNameTitle"
+           :fileInputHorizontal="!fileItemStylePortrait"
            @fileName="getFileName"
             />
            <!-- 弹出框 -->
@@ -355,7 +356,7 @@ export default {
         fileItemStylePortrait:true, //默认竖屏 
         fileSortName:"name",//name,size,time
         fileSortDesc:0, //0-倒序 1-正序
-        fileNameTitle:"22",
+        fileNameTitle:"新建文件夹",//怎么v-modle
         fileSortItemActiveIndex:0,
         fileSortItemActiveOrder:"name", //name,size,time
         fileSortFlag:false,
@@ -482,12 +483,7 @@ export default {
         
         },
         deleteFile(){
-          if(this.delConfirmFlag){
-             this.delConfirmFlag = false
-          }else{
-            this.delConfirmFlag = true
-          }
-          
+          this.delConfirmFlag = !this.delConfirmFlag
         },
         renameFile(){
         

@@ -1,5 +1,9 @@
 <template>
-     <div class="ExFGye" v-show="fileInputFlag" style="left: 20px; top: 102px; display: block;">
+     <div class="ExFGye"  
+      :class="{'jyabN0g':fileInputHorizontal == true}" 
+      v-show="fileInputFlag"
+      style="left: 20px; top: 102px; display: block;"
+      >
             <div class="arcrG7oq">
               <input  class="GadHyA" type="text" v-focus v-model="title">
               <span  class="xkqbqwN" @click="fileRenameSureText">
@@ -29,6 +33,10 @@ export default {
         fileInputStyle:{
           type: String,
           default:""
+        },
+        fileInputHorizontal:{
+          type: Boolean,
+          default:false  //默认竖屏
         }
   },
   computed:{
