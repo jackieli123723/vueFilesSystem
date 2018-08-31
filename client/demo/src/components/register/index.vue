@@ -40,14 +40,16 @@
         </section>
       </div>
     </div>
-
+      <div id="loginBottomDiv">
+       Copyright © 2018. All Rights West Gate Internet Reserved.
+    </div>
 
   </div>
 </template>
 
 <script>
 export default {
-    name: 'login',
+    name: 'register',
     data(){
       return {
 

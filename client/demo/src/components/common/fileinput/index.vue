@@ -51,7 +51,7 @@ export default {
          this.$store.commit('updateFileInputFlag',false)
       },
       fileRenameSureText() {
-         // this.$emit('delItem',id) 
+          this.$emit('fileName',this.title) 
           this.$store.commit('updateFileInputFlag',false)
      }  
     }

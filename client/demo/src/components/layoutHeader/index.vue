@@ -84,35 +84,10 @@
 
 
 
-      <!-- 顶部弹出 -->
-      <Toast  />
+      
    
 
-   <!-- 选好主题的弹出框 -->
-    <!--   <div class="b-panel theme-b-dialog theme-alert-dialog header-theme-alert-dialog not-save-dialog" style="left: 592px; top: 80.5px; display: block;">
-            <div class="dlg-hd b-rlv">
-                    <div title="关闭" id="_disk_id_9" class="dlg-cnr dlg-cnr-r icon icon-close"></div>
-                    <h3 id="_disk_id_7">提示</h3>
-            </div>
-            <div class="dlg-bd">
-                    <div id="_disk_id_8" class="theme-alert-dialog-msg center">是否使用选择的皮肤？</div>
-            </div>
-            <div class="dlg-ft b-rlv">
-                    <div class="theme-alert-dialog-commands clearfix center">
-                            <a href="javascript:;" id="_disk_id_10" class="sbtn okay">
-                                    <b>是</b>
-                            </a>
-                            <a href="javascript:;" id="_disk_id_11" class="dbtn cancel">
-                                    <b>否</b>
-                            </a>
-                    </div>
-                    <div class="clearfix theme-alert-dialog-commands-plus">
-                            <a id="_disk_id_12" href="javascript:;" class="dbtn okay">
-                                    <b>关闭</b>
-                            </a>
-                    </div>
-            </div>
-    </div> -->
+ 
 
 
 
@@ -122,9 +97,7 @@
     > -->
        <div :class="[themeBoxSwitch == true ? 'checked fadeInUp ' : 'fadeOutDown ']" class="theme-animated b-panel theme-b-dialog theme-alert-dialog header-theme-alert-dialog theme-panel" 
     >
-    <div class="dlg-hd b-rlv" style="display: none;">
-        <div title="关闭" id="_disk_id_7" class="dlg-cnr dlg-cnr-r icon icon-close"></div>
-        <h3 id="_disk_id_5">切换主题</h3></div>
+  
     <div class="dlg-bd">
         <div id="_disk_id_6" class="theme-alert-dialog-msg center">
             <div class="theme-panel-bg"></div>
@@ -134,8 +107,6 @@
                         <ul>
                             <li>选择皮肤</li></ul>
                     </div>
-                    <div class="dialog-control">
-                        <span class="icon close"></span></div>
                 </div>
             </div>
             <div class="theme-panel-content">
@@ -193,47 +164,12 @@
 
 
 
-    <!-- 永久删除文件夹的提示弹出框 -->
-
-<!--    <div class="module-canvas" style="position: fixed; left: 0px; top: 0px; z-index: 50; background: rgb(0, 0, 0); opacity: 0.5; width: 100%; height: 100%; display: block;"></div>
-
-
-    <div class="dialog dialog-confirm   dialog-gray" id="confirm" style="width: 460px; top: 212px; bottom: auto; left: 538px; right: auto; display: block; visibility: visible; z-index: 55;">
-        <div class="dialog-header dialog-drag">
-                <h3>
-                        <span class="dialog-header-title">
-                                <em class="select-text">确认删除</em></span>
-                </h3>
-                <div class="dialog-control">
-                        <span class="dialog-icon dialog-close icon icon-close">
-                                <span class="sicon">×</span></span>
-                </div>
-        </div>
-        <div class="dialog-body">
-                <div style="text-align:center;padding:40px 22px 22px 22px;">确认要把所选文件放入回收站吗？
-                        <br>删除的文件可在10天内通过回收站还原</div></div>
-        <div class="dialog-footer g-clearfix">
-                <a class="g-button g-button-blue-large" data-button-id="b95" data-button-index="" href="javascript:;" title="确定" style="padding-left: 50px;">
-                        <span class="g-button-right" style="padding-right: 50px;">
-                                <span class="text" style="width: auto;">确定</span></span>
-                </a>
-                <a class="g-button g-button-large" data-button-id="b97" data-button-index="" href="javascript:;" title="取消" style="padding-left: 50px;">
-                        <span class="g-button-right" style="padding-right: 50px;">
-                                <span class="text" style="width: auto;">取消</span></span>
-                </a>
-        </div>
-     
-</div>
- -->
-
-
-
 </div>
 </template>
 
 <script>
 
-import {sessionStorageSave} from '../../utils/storage.js'
+import {sessionStorageSave,sessionStorageFetch} from '../../utils/storage.js'
 
 import Toast from '../common/toast'
 
@@ -245,11 +181,14 @@ export default {
   },
   data(){
     return {
+        themeConfirmFlag:false,
         personLayer:false,
         level:2,//0,1,2 账号等级可根据文件个数 定义10 50 100
         avatr:"https://ss0.bdstatic.com/7Ls0a8Sm1A5BphGlnYG/sys/portrait/item/1988db14.jpg",
-        themeActivedId:7,
-        themeTypeName:"beach",
+        // themeActivedId:7,
+        // themeTypeName:"beach",
+        themeTypeName:sessionStorageFetch('userInfo').theme || 'beach',
+        lastThemeActivedId:-1,
         themeActivedIdSmallImg: require('../../assets/theme/white/demo.png'),
         themeBoxSwitch:false,
         themeData:[
@@ -320,6 +259,18 @@ export default {
         ]
     }
   },
+  computed:{
+     themeActivedId(){
+          var self =this
+          var idx = ''
+          self.themeData.forEach(function(val,index,arr){
+           if(self.themeTypeName == val.theme){
+               idx = index
+           }
+         })
+         return idx
+     }
+  },
   mounted(){
 //    let theme = sessionStorageFetch("theme")
 //    alert(theme)
@@ -335,11 +286,21 @@ export default {
     hidePersonLayer(){
       this.personLayer = false
     },
+    themeSure(){
+      this.themeConfirmFlag = !this.themeConfirmFlag
+    },
+    themeCancle(){
+      this.themeConfirmFlag = !this.themeConfirmFlag
+    },
     openThemeBox(){
      this.themeBoxSwitch = !this.themeBoxSwitch
     },
     hideThemeBoxCancel(){
+      //应用皮肤
+     //this.themeConfirmFlag = !this.themeConfirmFlag
+     
      this.themeBoxSwitch = !this.themeBoxSwitch
+     
     },
     hideThemeBoxSure(){
      this.themeBoxSwitch = !this.themeBoxSwitch
@@ -374,7 +335,7 @@ export default {
     },
     updateTheme(themeName,index){
       this.themeTypeName = themeName
-      this.themeActivedId = index
+      this.lastThemeActivedId = index
       sessionStorageSave('userInfo',{
           theme:themeName
       })
@@ -409,6 +370,8 @@ export default {
 // @import "../../assets/less/disk.header.less";
 // @import "../../assets/less/context-all.less";
 // @import "../../assets/less/disk.theme.less";
+
+
 
 .xtJbHcb .OMDFeH.level-0 .desc-arrow {
     border-left: 10px solid transparent;
@@ -478,6 +441,7 @@ export default {
         bottom:0
     }
 }
+
 
 
 </style>

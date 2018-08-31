@@ -60,13 +60,13 @@
                 </span>
               </span>
 
-              <a @click="addNewFile" class="g-button"  href="javascript:;">
+              <a class="g-button"  href="javascript:;" @click="addNewFile" >
                 <span class="g-button-right">
                   <em class="icon icon-newfolder"></em>
                   <span class="text" style="width: auto;">新建文件夹</span></span>
               </a>
 
-              <a class="g-button"  href="javascript:;">
+              <a class="g-button"  href="javascript:;" @click="gzipDownloadFile">
                 <span class="g-button-right">
                   <em class="icon icon-download"></em>
                   <span class="text" style="width: auto;">打包下载</span></span>
@@ -77,7 +77,7 @@
            
             <div class="QDDOQB">
                 <div class="button-box-mark" style="height:1px;"></div> 
-              <a class="g-button"  href="javascript:;">
+              <a class="g-button"  href="javascript:;" @click="shareFile">
                 <span class="g-button-right">
                   <em class="icon icon-share" ></em>
                   <span class="text" style="width: auto;">分享</span></span>
@@ -85,37 +85,37 @@
 
              
 
-              <a class="g-button" href="javascript:;">
+              <a class="g-button" href="javascript:;" @click="play">
                 <span class="g-button-right">
                   <em class="icon icon-play" title="音乐播放"></em>
                   <span class="text" style="width: auto;">音乐播放</span></span>
               </a>
 
-              <a class="g-button" href="javascript:;">
+              <a class="g-button" href="javascript:;" @click="downloadFile">
                 <span class="g-button-right">
                   <em class="icon icon-download" title="下载"></em>
                   <span class="text" style="width: auto;">下载</span></span>
               </a>
 
-              <a class="g-button g-disabled" href="javascript:;">
+              <a class="g-button" href="javascript:;" @click="deleteFile()">
                 <span class="g-button-right">
                   <em class="icon icon-delete" title="删除"></em>
                   <span class="text" style="width: auto;">删除</span></span>
               </a>
 
-              <a class="g-button g-disabled">
+              <a class="g-button g-disabled" @click="renameFile">
                 <span class="g-button-right">
                   <span class="text" style="width: auto;">重命名</span></span>
               </a>
-              <a class="g-button"  href="javascript:;">
+              <a class="g-button"  href="javascript:;" @click="copyFile">
                 <span class="g-button-right">
                   <span class="text" style="width: auto;">复制到</span></span>
               </a>
-              <a class="g-button"  href="javascript:;">
+              <a class="g-button"  href="javascript:;" @click="moveFile">
                 <span class="g-button-right">
                   <span class="text" style="width: auto;">移动到</span></span>
               </a>
-              <a class="g-button"href="javascript:;" title="详细信息">
+              <a class="g-button"href="javascript:;" title="详细信息" @click="detailFile">
                 <span class="g-button-right">
                   <em class="icon icon-share" title="详细信息"></em>
                   <span class="text" style="width: auto;">详细信息</span></span>
@@ -266,28 +266,53 @@
             </div>
           </div>
           <!-- 横屏 -->
-          <div class="fyQgAEb" type="横屏" style="margin-top:150px;" :class="{'active':fileItemStylePortrait == false}" >
+          <div class="fyQgAEb" type="横屏" style="margin-top:50px;" :class="{'active':fileItemStylePortrait == false}" >
             <div class="BNfIyPb" style="height: 307px; overflow-y: auto;">
               <div class="JKvHJMb" style="height:auto">
                 <dd class="g-clearfix">
-                  <!-- cEefyz open-enable ntX8zG  -->
-                  <div class="cEefyz open-enable ntX8zG" style="display: block" v-for="(file,index) in fileDataList" :key=index>
+                  <!-- cEefyz hxyXEoG ntX8zG ||  ntX8zG 打钩-->
+                  <div class="cEefyz  " 
+                   :class="{' hxyXEoG':fileHorizontalHoverItemIndex == index,'ntX8zG':file.checked == true}"  
+                    @mouseover="fileHoverItem('horizontal',index)" 
+                     @mouseleave="fileHoverItem('horizontal',-1)"
+                     v-for="(file,index) in fileDataList" :key=index>
                     <div class="qmstXYmX"  :class="formatFileName(file.server_filename,'large')">
                     </div>
                     <div class="file-name">
-                      <a  class="ipXEev" href="javascript:void(0);" >{{file.server_filename}}</a></div>
-                    <span  class="EOGexf">
+                      <a  class="ipXEev" href="javascript:void(0);" >{{file.server_filename}}</a>
+                    </div>
+                    <span  class="EOGexf" @click="setFileItemChecked(file,index)">
                       <span class="icon usXvNX"></span>
-                      <span class="icon checkgridsmall"></span></span>
+                      <span class="icon checkgridsmall"></span>
+                    </span>
                   </div>
                 </dd>
               </div>
             </div>
           </div>
           <!-- loading 动画  必须隐藏 否则hover效果失效 -->
-          <!-- <Loading  /> -->
+          <Loading v-if="loadingFlag"  />
           <!-- 新建文件夹和修改文件夹的弹出层输入框 只能重命名和新建文件类型  -->
-          <File-Input v-if="fileInputFlag"  :fileNameTitle="fileNameTitle" />
+          <File-Input 
+           v-if="fileInputFlag" 
+           :fileNameTitle="fileNameTitle"
+           @fileName="getFileName"
+            />
+           <!-- 弹出框 -->
+          <Show-Tip 
+             v-if="delConfirmFlag"
+             :delHeadTitle="delHeadTitle"
+             :delTitle="delTitle"
+             :delType="1"
+             @delItem="hiddenShowTip"
+          ></Show-Tip>
+          
+          <!-- 顶部弹出 弱提示-->
+         <Toast 
+          v-show="toastShowFlag"
+          :toastType="'success'"
+          :toastText="'重命名成功'"
+          />
         </div>
       </div>
     </div>
@@ -298,14 +323,30 @@
 
 import Loading from '../common/loading'
 import FileInput from '../common/fileinput'
+import ShowTip from '../common/showTip'
+import Toast from '../common/toast'
+
 
 import { mapGetters } from 'vuex'
 import {formatFileNameType,formatDate, formatFileSize} from '../../utils/common'
 
 export default {
     name: 'all',
+    components: {
+     Loading,
+     FileInput,
+     ShowTip,
+     Toast
+    },
     data(){
       return {
+        delConfirmFlag:false,
+        delHeadTitle:"提示",
+        delTitle:"是否使用选择的皮肤？",
+        delSureText:"是",
+        delCancelText:"否",
+        loadingFlag:false,
+        toastShowFlag:false,
         searchTitle:"",  
         searchTitleAttr:"搜索您的文件",
         searchTextFlag:true,//兼容input 清除按钮
@@ -335,8 +376,8 @@ export default {
         fileCheckAllFlag:false,
         fileCheckItemArr:[],
         arrItemCheckArr:[],
-        filePortraitHoverItemIndex:-1,
-        fileHorizontalHoverItemIndex:-1,
+        filePortraitHoverItemIndex:-1,//竖屏hover
+        fileHorizontalHoverItemIndex:-1,//横屏hover
         fileDataList:[
            {
             "server_mtime": 1413277988000,
@@ -411,10 +452,6 @@ export default {
         pageSize:10,
       }
     },
-    components: {
-     Loading,
-     FileInput
-    },
     mounted(){
         
     },
@@ -422,15 +459,50 @@ export default {
       ...mapGetters(['fileInputFlag']),
     },
     methods:{
-       changeFileItemStyle(){
-         this.fileItemStylePortrait = !this.fileItemStylePortrait
-       },
+      getFileName(title){
+        console.log(title)         
+      },
+      hiddenShowTip(){
+       this.delConfirmFlag = false
+       console.log(1)
+      },
        addNewFile(){
-    
           this.$store.commit('updateFileInputFlag',true)
        },
-       renameFileName(){
-       
+       gzipDownloadFile(){
+ 
+        },
+        shareFile(){
+         console.log('share')
+        },
+        play(){
+        
+        },
+        downloadFile(){
+        
+        },
+        deleteFile(){
+          if(this.delConfirmFlag){
+             this.delConfirmFlag = false
+          }else{
+            this.delConfirmFlag = true
+          }
+          
+        },
+        renameFile(){
+        
+        },
+        copyFile(){
+        
+        },
+        moveFile(){
+        
+        },
+        detailFile(){
+        
+        },
+       changeFileItemStyle(){
+         this.fileItemStylePortrait = !this.fileItemStylePortrait
        },
        toggleSort(){
           this.fileSortFlag = !this.fileSortFlag
@@ -441,7 +513,7 @@ export default {
           this.fileSortFlag = !this.fileSortFlag
        },
        search(){
-         
+          
        },
        clearTitle(){
          this.searchTextFlag = true
@@ -467,6 +539,7 @@ export default {
             } else{
                 this.$set(file,"checked",true);
             }
+            
             this.fileDataList.forEach((value,index)=>{
                 if(value.hasOwnProperty("checked")){
                     if(value.checked){
@@ -483,6 +556,7 @@ export default {
                 // this.arrItemCheckArr = []
             }else{
                 this.fileCheckAllFlag = true;
+               
             }
         },
        fileCheckAll(){
@@ -493,7 +567,8 @@ export default {
                 }else{
                     this.$set(value,"checked",this.fileCheckAllFlag);
                 }
-            });
+          });
+          //调用选中
        },
        fileHoverItem(direction,index){
         if(direction == 'portrait'){
@@ -577,12 +652,11 @@ export default {
 }
 
 
-
+/*竖屏hover*/
 .NHcGw .AuPKyz:hover{
   background: #f6faff;
   border-bottom: 1px solid #daebfe;
 }
-
 .NHcGw .AuPKyz:hover:before {
     content: "";
     border-top: 1px solid #daebfe;
@@ -593,8 +667,17 @@ export default {
     z-index: 1;
     visibility: visible;
 }
-
 .NHcGw .AuPKyz:hover:first-child:before, .NHcGw .ntX8zG:first-child:before {
     top: 0;
 }
+
+/*横屏hover*/
+
+.BNfIyPb .cEefyz:hover {
+    // background-color: #f1f5fa;
+    // border: 1px solid #90c3fd;
+    // border-radius: 5px;
+}
+
+
 </style>
