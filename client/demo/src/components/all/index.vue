@@ -134,12 +134,13 @@
         <div class="KPDwCE" style="height: 800px;">
 
           <div class="JDeHdxb">
+            <!-- 根目录显示全部文件 -->
             <span class="EgMMec">全部文件</span>
-  
             <span class="FcucHsb">获取更多数据...</span>
             <!-- <span class="FcucHsb">已加载{{fileDataList.length}}个</span> -->
            
-           <ul class="FuIxtL" node-type="FuIxtL" style="display: none;">
+           <!-- 根目录子集显示这个面包屑 -->
+           <ul class="FuIxtL"  style="display: block;">
               <li>
                 <a data-deep="-1" href="javascript:;">返回上一级</a>
                 <span class="EKIHPEb">|</span></li>
@@ -161,8 +162,21 @@
 
               <ul class="QAfdwP tvPMvPb" type="竖屏全选" style="display: block;"    >
                 <!-- fufHyA yfHIsP EzubGg
-                fufHyA yfHIsP JFaAINb -->
-                <li data-key="name" class="fufHyA yfHIsP JFaAINb" style="width:60%;">
+                fufHyA yfHIsP JFaAINb 
+                name
+              fufHyA yfHIsP JFaAINb 上
+              fufHyA yfHIsP MCGAxG  下
+              
+              size
+              fufHyA JFaAINb 上
+              fufHyA MCGAxG 下
+              
+              time
+              
+              fufHyA gObdAzb JFaAINb 上
+	            fufHyA gObdAzb MCGAxG 下
+                -->
+                <li data-key="name" class="fufHyA yfHIsP" :class="{'JFaAINb':fileSortDesc == 0 && fileSortName =='name','MCGAxG':fileSortDesc == 1  && fileSortName =='name'}"  style="width:60%;" @click="sort('name')">
                   <div class="Qxyfvg fydGNC ">
                     <span class="zbyDdwb" @click="fileCheckAll"></span>
                     <span class="MIMvNNb">全选</span>
@@ -174,14 +188,14 @@
                   <span class="icon sFxCFbb icon-downtitle"></span>
                 </li>
 
-                <li data-key="size" class="fufHyA MCGAxG" style="width:16%;">
+                <li data-key="size" class="fufHyA" :class="{'JFaAINb':fileSortDesc == 0 && fileSortName =='size','MCGAxG':fileSortDesc == 1  && fileSortName =='size'}" style="width:16%;" @click="sort('size')">
                   <span class="text">大小</span>
                   <span class="xEuDywb"></span>
                   <span class="icon aHEytd icon-up"></span>
                   <span class="icon sFxCFbb icon-downtitle"></span>
                 </li>
                 <!-- fufHyA gObdAzb JFaAINb -->
-                <li data-key="time" class="fufHyA gObdAzb MCGAxG" style="width:23%;">
+                <li data-key="time" class="fufHyA gObdAzb " :class="{'JFaAINb':fileSortDesc == 0 && fileSortName =='time','MCGAxG':fileSortDesc == 1  && fileSortName =='time'}" style="width:23%;" @click="sort('time')">
                   <span class="text">修改日期</span>
                   <span class="xEuDywb"></span>
                   <span class="icon aHEytd icon-up"></span>
@@ -202,8 +216,8 @@
                
         
                <!-- 默认是none -->
-              <div class="FcQMwt global-clearfix">
-                <span class="MdLxwM">已选中1110个文件/文件夹</span>
+              <div class="FcQMwt global-clearfix" v-if="fileCheckedGroups && fileCheckedGroups.length > 0">
+                <span class="MdLxwM">已选中{{fileCheckedGroups.length}}个文件/文件夹</span>
                 <div class="KKtwaH"></div>
               </div>
             </div>
@@ -355,7 +369,7 @@ export default {
         fileItemStyle:"portrait", // portrait 竖屏  | horizontal  横屏
         fileItemStylePortrait:true, //默认竖屏 
         fileSortName:"name",//name,size,time
-        fileSortDesc:0, //0-倒序 1-正序
+        fileSortDesc:0, //0-升序 1-降序
         fileNameTitle:"新建文件夹",//怎么v-modle
         fileSortItemActiveIndex:0,
         fileSortItemActiveOrder:"name", //name,size,time
@@ -375,8 +389,6 @@ export default {
            }
         ],
         fileCheckAllFlag:false,
-        fileCheckItemArr:[],
-        arrItemCheckArr:[],
         filePortraitHoverItemIndex:-1,//竖屏hover
         fileHorizontalHoverItemIndex:-1,//横屏hover
         fileDataList:[
@@ -454,10 +466,50 @@ export default {
       }
     },
     mounted(){
+          var currentPath = this.$route.path;
+          function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            //if (r != null) return unescape(r[2]); return null;乱码
+            //js %2F  == /
+            //改造为中文斜线路径
+            if (r != null) return decodeURI(r[2]).replace(/%2F/g,'/'); return null; //中文
+          }
+          
+        var path = getQueryString("path");
         
+        
+        console.log(currentPath)
+        console.log(path);
     },
    computed:{
       ...mapGetters(['fileInputFlag']),
+      //计算选中数组
+      fileCheckedGroups(){
+          let checkedGroups = [];
+          this.fileDataList.forEach(function(item) {
+              if (item.checked) {
+                  checkedGroups.push(item.path);
+              }
+          });
+          return checkedGroups;
+      },
+      //是否全部选中
+      isCheckedAll(){
+        let i = 0;
+        let lens = this.fileDataList.length
+        this.fileDataList.forEach(function(item) {
+            if (item.checked) {
+                i++;
+            }
+        });
+        return  i == lens  ? true : false 
+      },
+      //分割文件路由生成面包屑
+      getFilePath(){
+        var currentPath = this.$route.path;
+        console.log(currentPath)
+      }
     },
     methods:{
       getFileName(title){
@@ -507,6 +559,26 @@ export default {
           this.fileSortItemActiveIndex = index
           this.fileSortItemActiveOrder = id
           this.fileSortFlag = !this.fileSortFlag
+
+           this.loadingFlag = true
+           let self = this
+           setTimeout(function(){
+             self.loadingFlag = false
+           },1000)
+       },
+       sort(name){
+           
+           if(this.fileSortDesc == 1){
+              this.fileSortDesc = 0
+           }else{
+             this.fileSortDesc = 1
+           }
+           this.fileSortName = name
+           this.loadingFlag = true
+           let self = this
+           setTimeout(function(){
+             self.loadingFlag = false
+           },1000)
        },
        search(){
           
@@ -531,32 +603,15 @@ export default {
        },
        setFileItemChecked(file,index){
             if(file.hasOwnProperty("checked")){
-                file.checked = ! file.checked;
+                  file.checked = !file.checked;
             } else{
                 this.$set(file,"checked",true);
             }
-            
-            this.fileDataList.forEach((value,index)=>{
-                if(value.hasOwnProperty("checked")){
-                    if(value.checked){
-                        this.arrItemCheckArr.push(1);
-                    }else{
-                        this.arrItemCheckArr.push(-1);
-                    }
-                }else{
-                    this.arrItemCheckArr.push(-1);
-                }
-            });
-            if(this.arrItemCheckArr.join("").indexOf("-1")!=-1){
-                this.fileCheckAllFlag = false;
-                // this.arrItemCheckArr = []
-            }else{
-                this.fileCheckAllFlag = true;
-               
-            }
+            //判断是否全选
+             this.fileCheckAllFlag = this.isCheckedAll
         },
        fileCheckAll(){
-         this.fileCheckAllFlag = !this.fileCheckAllFlag
+         this.fileCheckAllFlag = !this.isCheckedAll
          this.fileDataList.forEach((value,index)=>{
                 if(value.hasOwnProperty("checked")){
                     value.checked = this.fileCheckAllFlag;
@@ -574,7 +629,6 @@ export default {
         if(direction == 'horizontal'){
           this.fileHorizontalHoverItemIndex = index
         }
-
        },
        fileCheckedItem(id){
          this.fileCheckItemArr.push(id)
@@ -675,5 +729,8 @@ export default {
     // border-radius: 5px;
 }
 
+.fufHyA:hover{
+   background: #f6faff;
+} 
 
 </style>

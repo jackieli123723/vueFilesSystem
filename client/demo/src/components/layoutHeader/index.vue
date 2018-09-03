@@ -330,7 +330,7 @@ export default {
             document.getElementsByTagName("head")[0].appendChild(link);
         });
     },
-    changeTheme(){
+    changeStyleTheme(){
     
     },
     updateTheme(themeName,index){
