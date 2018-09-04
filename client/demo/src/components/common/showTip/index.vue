@@ -106,8 +106,9 @@
 
 <style lang="less" scoped>
 
+
 .KPDwCE .g-button{
- border:1px solid #c0d9fe;
+ //border:1px solid #c0d9fe;
 }
 .g-button-large .text{
   color:#3b8cff;

@@ -2,7 +2,7 @@
    <div>
            <template v-if="type=='loading'">
                  <!--  正在 -->
-                <div class="module-yun-tip">
+                <div class="module-yun-tip" v-if="show">
                         <div class="tip-inner">
                             <span class="tip-icon tip-icon-loading"></span>
                             <span class="tip-msg">{{toastText}}</span>
@@ -12,7 +12,7 @@
 
            <template v-if="type=='success'">
                  <!--  成功 -->
-                  <div class="yun-header-tip-box" >
+                  <div class="yun-header-tip-box" v-if="show">
                     <div class="yun-header-tip success">
                     <i class="yun-header-tip-icon icon icon-tips-success"></i>
                     <span class="yun-header-tip-msg">{{toastText}}</span>
@@ -22,7 +22,7 @@
 
             <template v-if="type=='failure'">
                  <!--  失败 -->
-                  <div class="module-yun-tip red-yun-tips">
+                  <div class="module-yun-tip red-yun-tips" v-if="show">
                     <div class="tip-inner">
                     <span class="tip-icon icon icon-tips-caution"></span>
                     <span class="tip-msg">{{toastText}}</span>
@@ -78,6 +78,9 @@ export default {
         let tosttype = this.toastType 
         return tosttype
     }
+  },
+  mounted(){
+     
   },
   methods:{
     close(){

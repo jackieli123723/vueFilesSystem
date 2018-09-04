@@ -76,6 +76,7 @@ export default {
 
 @import "../../assets/less/disk.theme.less";
 
+@import "../../assets/less/uploader-all.less";
 
 //这里是选主题样式覆盖 16种皮肤
 

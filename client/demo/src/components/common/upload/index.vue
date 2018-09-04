@@ -34,7 +34,8 @@
       <a class="g-button" href="javascript:void(0);">
         <span class="g-button-right">立即下载</span></a>
       <div class="text"></div>
-      <em class="close">×</em></div>
+      <em class="close">×</em>
+    </div>
   </div>
   <div class="dialog-body">
     <div class="uploader-list-wrapper">
@@ -44,7 +45,8 @@
         <div class="file-path">上传目录</div>
         <div class="file-status">状态</div>
         <div class="file-operate">操作</div></div>
-      <div class="tips" style="display: block;">
+
+      <!-- <div class="tips" style="display: block;">
         <div class="resident-caution">
           <span class="caution-title">警告</span>
           <span class="caution-text">严禁利用百度网盘上传、传播暴力恐怖、色情违法及侵犯他人合法权益的违法信息，一经发现将严格按照相关法律法规处理。</span>
@@ -54,9 +56,73 @@
         <a class="g-button" href="javascript:void(0);">
           <span class="g-button-right">立即下载</span></a>
         <div class="text"></div>
+        <em class="close">×</em>
+      </div> -->
+
+      <div class="tips has-error" style="display: block;">
+        <div class="resident-caution">
+          <span class="caution-title" style="width: 4px; text-indent: -9999px;">警告</span>
+          <span class="caution-text">严禁利用百度网盘上传、传播暴力恐怖、色情违法及侵犯他人合法权益的违法信息，一经发现将严格按照相关法律法规处理。</span>
+          <em class="arrow-outer"></em>
+          <em class="arrow-inner"></em>
+        </div>
+        <a class="g-button" href="javascript:void(0);" style="display: none;">
+          <span class="g-button-right">立即下载</span></a>
+        <div class="text">有3个文件上传成功</div>
         <em class="close">×</em></div>
+
       <div class="uploader-list">
         <ul class="container" id="uploaderList">
+
+            <li class="file-list status-waiting">
+              <div class="process"></div>
+              <div class="info">
+                <div class="file-name" title="1523938751785-2004-8992.png">
+                  <div class="file-icon fileicon-small-pic"></div>
+                  <span class="name-text">11112.png</span></div>
+                <div class="file-size">186KB</div>
+                <div class="file-path">
+                  <a title="新建文件夹(9)" class="server_path" href="#/all?path=%2F360%E4%BA%91%E7%9B%98%2F%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9(9)%2F">新建文件夹(9)</a></div>
+                <div class="file-status">
+                  <span class="waiting">排队中…</span>
+                  <span class="prepare">准备上传…</span>
+                  <span class="uploading">
+                    <em class="precent">0%</em>
+                    <em class="speed">(0b/s)</em></span>
+                  <span class="error">
+                    <em></em>
+                    <i>服务器错误</i>
+                    <b>
+                    </b>
+                  </span>
+                  <span class="caution">
+                    <em></em>
+                    <i>服务器错误</i>
+                    <b>
+                    </b>
+                  </span>
+                  <span class="pause">
+                    <em></em>
+                    <i>已暂停</i>
+                  </span>
+                  <span class="cancel">
+                    <em></em>
+                    <i>已取消</i>
+                  </span>
+                  <span class="success">
+                    <em></em>
+                    <i>
+                    </i>
+                  </span>
+                </div>
+                <div class="file-operate">
+                  <em class="operate-pause"></em>
+                  <em class="operate-continue"></em>
+                  <em class="operate-retry"></em>
+                  <em class="operate-remove"></em>
+                  <a class="error-link" href="javascript:void(0);">点我解决</a></div>
+              </div>
+            </li>
           <li class="file-list status-success">
             <div class="process" style="width: 100%;"></div>
             <div class="info">

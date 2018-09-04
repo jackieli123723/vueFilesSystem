@@ -60,7 +60,7 @@
                 </span>
               </span>
 
-              <a class="g-button"  href="javascript:;" @click="addNewFile" >
+              <a class="g-button"  href="javascript:;" @click="addNewFile('新建文件夹')" >
                 <span class="g-button-right">
                   <em class="icon icon-newfolder"></em>
                   <span class="text" style="width: auto;">新建文件夹</span></span>
@@ -102,11 +102,14 @@
                   <em class="icon icon-delete" title="删除"></em>
                   <span class="text" style="width: auto;">删除</span></span>
               </a>
-
-              <a class="g-button g-disabled" @click="renameFile">
+              
+              <!-- 只有勾选一个的时候才是点击的否则是不能点击的 -->
+            
+              <a class="g-button " :class="{'g-disabled':fileCheckedGroups && fileCheckedGroups.length > 1 }" @click="renameFile">
                 <span class="g-button-right">
                   <span class="text" style="width: auto;">重命名</span></span>
               </a>
+
               <a class="g-button"  href="javascript:;" @click="copyFile">
                 <span class="g-button-right">
                   <span class="text" style="width: auto;">复制到</span></span>
@@ -140,27 +143,15 @@
             <!-- <span class="FcucHsb">已加载{{fileDataList.length}}个</span> -->
            
            <!-- 根目录子集显示这个面包屑 -->
-           <ul class="FuIxtL"  style="display: block;">
-              <li>
-                <a data-deep="-1" href="javascript:;">返回上一级</a>
-                <span class="EKIHPEb">|</span></li>
-              <li node-type="tbAudfb">
-                <span title="全部文件/360云盘">...</span>
-                <span class="KLxwHFb">&gt;</span>
-                <a href="javascript:;" title="全部文件/360云盘" data-deep="1">360云盘</a>
-                <span class="KLxwHFb">&gt;</span>
-                <a href="javascript:;" title="全部文件/360云盘/test6667" data-deep="2">test6667</a>
-                <span class="KLxwHFb">&gt;</span>
-                <a href="javascript:;" title="全部文件/360云盘/test6667/新建文件夹" data-deep="3">新建文件夹</a>
-                <span class="KLxwHFb">&gt;</span>
-                <span title="全部文件/360云盘/test6667/新建文件夹/新建文件夹">新建文件夹</span></li>
-            </ul>
+
+           <BreadArrow />
+
           </div>
 
           <div class="QxJxtg cazEfA">
             <div class="xGLMIab">
 
-              <ul class="QAfdwP tvPMvPb" type="竖屏全选" style="display: block;"    >
+              <ul class="QAfdwP tvPMvPb" type="竖屏全选" v-if="fileItemStylePortrait == true" style="display: block;"    >
                 <!-- fufHyA yfHIsP EzubGg
                 fufHyA yfHIsP JFaAINb 
                 name
@@ -203,7 +194,7 @@
                 </li>
               </ul>
 
-              <ul class="vwCPvP tvPMvPb" type="横屏全选" style="display: block;">
+              <ul class="vwCPvP tvPMvPb" type="横屏全选" v-if="fileItemStylePortrait == false"  style="display: block;">
                 <!-- fufHyA yfHIsP -->
                 <li class="fufHyA yfHIsP EzubGg">
                   <div style="width:100px" class="Qxyfvg fydGNC">
@@ -223,7 +214,7 @@
             </div>
           </div>
           <!-- 竖屏 -->
-          <div class="zJMtAEb" type="竖屏" style="margin-top:110px;" :class="{'active':fileItemStylePortrait == true}"  >
+          <div class="zJMtAEb" type="竖屏" style="margin-top:-15px;" :class="{'active':fileItemStylePortrait == true}"  >
             <div class="NHcGw" style="overflow-y: auto; height: 700px;">
               <div class="vdAfKMb" style="height: auto;">
                 <!-- ntX8zG hxyXEoG 伪类做的 fileItemHover ntX8zG 打钩--> 
@@ -231,13 +222,18 @@
                   :class="{' hxyXEoG':filePortraitHoverItemIndex == index,'ntX8zG':file.checked == true}"  
                     @mouseover="fileHoverItem('portrait',index)"  
                     @mouseleave="fileHoverItem('portrait',-1)" v-for="(file,index) in fileDataList" :key=index >
-                  <span  class="EOGexf" @click="setFileItemChecked(file,index)">
+                  <span  class="EOGexf" @click="setFileItemChecked(file,index,$event)">
                     <span class="icon NbKJexb"></span>
                   </span>
                   <div class="qmstXYmX" :class="formatFileName(file.server_filename,'small')"></div>
                   <div class="file-name" style="width:60%">
                     <div class="text">
-                      <a href="javascript:void(0);" class="ipXEev">{{file.server_filename}}</a></div>
+                      <!-- <a href="javascript:void(0);" class="ipXEev">{{file.server_filename}}</a> -->
+                           <router-link  class="ipXEev" :to="{ path: 'all', query: { path: file.path }}" >
+                          {{file.server_filename}}
+                           </router-link>
+                    </div>
+                      
                   </div>
                   <div class="bkkqGm0o"  v-if="file.isdir == 1" style="width:16%">-</div>
                   <div class="bkkqGm0o"  v-if="file.isdir == 0" style="width:16%">{{size(file.size)}}</div>
@@ -280,7 +276,7 @@
             </div>
           </div>
           <!-- 横屏 -->
-          <div class="fyQgAEb" type="横屏" style="margin-top:50px;" :class="{'active':fileItemStylePortrait == false}" >
+          <div class="fyQgAEb" type="横屏" style="margin-top:-15px;" :class="{'active':fileItemStylePortrait == false}" >
             <div class="BNfIyPb" style="height: 307px; overflow-y: auto;">
               <div class="JKvHJMb" style="height:auto">
                 <dd class="g-clearfix">
@@ -293,9 +289,14 @@
                     <div class="qmstXYmX"  :class="formatFileName(file.server_filename,'large')">
                     </div>
                     <div class="file-name">
-                      <a  class="ipXEev" href="javascript:void(0);" >{{file.server_filename}}</a>
+                      <!-- <a  class="ipXEev" href="javascript:void(0);" >{{file.server_filename}}</a> -->
+
+                      <router-link  class="ipXEev" :to="{ path: 'all', query: { path: file.path }}" >
+                          {{file.server_filename}}
+                      </router-link>
+
                     </div>
-                    <span  class="EOGexf" @click="setFileItemChecked(file,index)">
+                    <span  class="EOGexf" @click="setFileItemChecked(file,index,$event)">
                       <span class="icon usXvNX"></span>
                       <span class="icon checkgridsmall"></span>
                     </span>
@@ -306,28 +307,40 @@
           </div>
           <!-- loading 动画  必须隐藏 否则hover效果失效 -->
           <Loading v-if="loadingFlag"  />
-          <!-- 新建文件夹和修改文件夹的弹出层输入框 只能重命名和新建文件类型  -->
+          <!-- 新建文件夹和修改文件夹的弹出层输入框 只能重命名和新建文件类型 
+          
+           :fileNameTitle="fileNameTitle"
+           -->
           <File-Input 
            v-if="fileInputFlag" 
-           :fileNameTitle="fileNameTitle"
+          :fileNameTitle="fileNameTitle"
+          :fileInputStyle="fileInputStyle"
            :fileInputHorizontal="!fileItemStylePortrait"
-           @fileName="getFileName"
+           @changeFileName="changeFileName"
+           @changeFileNameSure="changeFileNameSure"
             />
            <!-- 弹出框 -->
           <Show-Tip 
              v-if="delConfirmFlag"
              :delHeadTitle="delHeadTitle"
              :delTitle="delTitle"
-             :delType="1"
+             :delType="2"
              @delItem="hiddenShowTip"
           ></Show-Tip>
+
+          
           
           <!-- 顶部弹出 弱提示-->
          <Toast 
           v-show="toastShowFlag"
-          :toastType="'success'"
-          :toastText="'重命名成功'"
+          :toastType="toastType"
+          :toastText="toastText"
           />
+
+          <Upload
+               
+          />
+
         </div>
       </div>
     </div>
@@ -340,7 +353,8 @@ import Loading from '../common/loading'
 import FileInput from '../common/fileinput'
 import ShowTip from '../common/showTip'
 import Toast from '../common/toast'
-
+import Upload from '../common/upload'
+import BreadArrow from '../common/breadArrow'
 
 import { mapGetters } from 'vuex'
 import {formatFileNameType,formatDate, formatFileSize} from '../../utils/common'
@@ -351,15 +365,17 @@ export default {
      Loading,
      FileInput,
      ShowTip,
-     Toast
+     Toast,
+     Upload,
+     BreadArrow
     },
     data(){
       return {
+        toastType:'failure',
+        toastText:'正在创建文件夹,请稍后...',
         delConfirmFlag:false,
-        delHeadTitle:"提示",
-        delTitle:"是否使用选择的皮肤？",
-        delSureText:"是",
-        delCancelText:"否",
+        delHeadTitle:"确认删除",
+        delTitle:"确认要把所选文件放入回收站吗？",
         loadingFlag:false,
         toastShowFlag:false,
         searchTitle:"",  
@@ -371,6 +387,8 @@ export default {
         fileSortName:"name",//name,size,time
         fileSortDesc:0, //0-升序 1-降序
         fileNameTitle:"新建文件夹",//怎么v-modle
+        fileInputOffsetX:20,
+        fileInputOffsetY:73,
         fileSortItemActiveIndex:0,
         fileSortItemActiveOrder:"name", //name,size,time
         fileSortFlag:false,
@@ -421,9 +439,9 @@ export default {
             "size": 6135798,
             "share": 0,
             "md5": "8fae8413ce327111a9a1bd3bb9500973",
-            "path": "/demo",
+            "path": "/360云盘",
             "local_ctime": 1377494892000,
-            "server_filename": "demo",
+            "server_filename": "360云盘",
              "id":2
           },
           {
@@ -466,21 +484,22 @@ export default {
       }
     },
     mounted(){
-          var currentPath = this.$route.path;
-          function getQueryString(name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-            var r = window.location.search.substr(1).match(reg);
-            //if (r != null) return unescape(r[2]); return null;乱码
-            //js %2F  == /
-            //改造为中文斜线路径
-            if (r != null) return decodeURI(r[2]).replace(/%2F/g,'/'); return null; //中文
-          }
+     // this.$store.commit('updateFileInputFlag',true)
+        //   var currentPath = this.$route.path;
+        //   function getQueryString(name) {
+        //     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        //     var r = window.location.search.substr(1).match(reg);
+        //     //if (r != null) return unescape(r[2]); return null;乱码
+        //     //js %2F  == /
+        //     //改造为中文斜线路径
+        //     if (r != null) return decodeURI(r[2]).replace(/%2F/g,'/'); return null; //中文
+        //   }
           
-        var path = getQueryString("path");
+        // var path = getQueryString("path");
         
         
-        console.log(currentPath)
-        console.log(path);
+        // console.log(currentPath)
+        // console.log(path);
     },
    computed:{
       ...mapGetters(['fileInputFlag']),
@@ -509,18 +528,55 @@ export default {
       getFilePath(){
         var currentPath = this.$route.path;
         console.log(currentPath)
+      },
+      fileInputStyle(){
+        return {
+          left:this.fileInputOffsetX,
+          top:this.fileInputOffsetY
+        }
       }
     },
     methods:{
-      getFileName(title){
-        console.log(title)         
+      //input emit 文件名
+      changeFileName(title){
+        console.log('change',title) 
+        this.fileNameTitle = title        
+      },
+      changeFileNameSure(title){
+        console.log('input-sure',title) 
+        this.fileNameTitle = title 
+        this.toastType = 'loading'
+        this.toastText = '正在创建文件夹,请稍后...'
+        this.toastShowFlag = true 
+        var self = this 
+        var timer = null;
+        var timeOut = timeOut || 2000;
+        clearTimeout(timer);
+        
+        setTimeout(function(){
+              self.toastType ="success"
+              self.toastText= "创建文件夹成功"
+        },1000)
+
+        timer = setTimeout(function() {
+            self.toastShowFlag = false
+        }, timeOut);
       },
       hiddenShowTip(){
        this.delConfirmFlag = false
-       console.log(1)
+       let fileList = this.fileCheckedGroups
+       //批量或者删除文件
+
+       console.log('弹出框确认删除fileList回调',fileList)
       },
-       addNewFile(){
+      addNewFile(name){
+          // this.fileNameTitle =  name
           this.$store.commit('updateFileInputFlag',true)
+          this.fileDataList.unshift({
+            "isdir": 1,
+	          "server_filename":this.fileNameTitle
+          })
+          
        },
        gzipDownloadFile(){
  
@@ -534,11 +590,17 @@ export default {
         downloadFile(){
         
         },
+        //删除文件列表[]
         deleteFile(){
+          if(this.fileCheckedGroups.length == 0){
+            return
+          }
           this.delConfirmFlag = !this.delConfirmFlag
         },
         renameFile(){
-        
+         
+          this.$store.commit('updateFileInputFlag',true)
+          //this.addNewFile(this.fileNameTitle)
         },
         copyFile(){
         
@@ -601,7 +663,18 @@ export default {
        size(fileSize){
            return formatFileSize(fileSize)
        },
-       setFileItemChecked(file,index){
+       setFileItemChecked(file,index,event){
+            this.fileNameTitle = file.server_filename
+            console.log(event) 
+
+            // this.fileInputOffsetX = event.offsetX
+            // this.fileInputOffsetY = event.offsetY
+
+            // this.fileInputOffsetX = event.clientX
+            // this.fileInputOffsetY = event.clientY
+
+             this.fileInputOffsetX = event.pageX - 196
+            this.fileInputOffsetY = event.pageY -135
             if(file.hasOwnProperty("checked")){
                   file.checked = !file.checked;
             } else{
@@ -630,12 +703,7 @@ export default {
           this.fileHorizontalHoverItemIndex = index
         }
        },
-       fileCheckedItem(id){
-         this.fileCheckItemArr.push(id)
-       },
-       fileCheckIcon(id){
-        return this.fileCheckItemArr.includes(id)
-       }
+  
     }
 }
 </script>
@@ -719,6 +787,12 @@ export default {
 }
 .NHcGw .AuPKyz:hover:first-child:before, .NHcGw .ntX8zG:first-child:before {
     top: 0;
+   
+}
+
+.NHcGw .ntX8zG:first-child:before {
+   border-top:0px solid transparent;
+   
 }
 
 /*横屏hover*/
@@ -729,8 +803,27 @@ export default {
     // border-radius: 5px;
 }
 
-.fufHyA:hover{
+.xGLMIab ul .fufHyA:hover{
    background: #f6faff;
+
 } 
 
+.KPDwCE .JDeHdxb{
+  padding-left:15px;
+}
+
+/*竖屏hover*/
+.NHcGw .AuPKyz .file-name a:hover, .NHcGw .AuPKyz .file-name a:hover, .NHcGw .AuPKyz .file-name a:active {
+    color:#3b8cff;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+
+/*横屏hover*/
+.BNfIyPb .cEefyz .file-name a:hover, .BNfIyPb .cEefyz .file-name a:active {
+     color:#3b8cff;
+    cursor: pointer;
+    text-decoration: none;
+}
 </style>
