@@ -131,15 +131,25 @@
       </div>
 
       <div class="3hh3BUu9">
-        <!--[if IE]>
-          <iframe id="historyIFrameEmulator" style="display: none"></iframe>
-        <![endif]-->
-        <div class="KPDwCE" style="height: 800px;">
+        <!-- 这里增加js鼠标拖拽选中事件 
+              @mousedown="mousedown"
+          @mouseup="mouseup"
+          @mousemove="mousemove"
+        -->
+        <div class="KPDwCE" style="height: 800px;border:1px solid red;"
+    
+        >
+        <!-- 拖拽的虚拟框选中元素 -->
+        <div 
+          v-if="isDragSelecting"
+          :style="selectionStyle"
+          class="selection-area">
+        </div>
 
           <div class="JDeHdxb">
             <!-- 根目录显示全部文件 -->
-            <span class="EgMMec">全部文件</span>
-            <span class="FcucHsb">获取更多数据...</span>
+            <span class="EgMMec" v-if="fileDataList && fileDataList.length > 0">全部文件</span>
+            <span class="FcucHsb" v-if="fileDataList && fileDataList.length > 0">获取更多数据...</span>
             <!-- <span class="FcucHsb">已加载{{fileDataList.length}}个</span> -->
            
            <!-- 根目录子集显示这个面包屑 -->
@@ -149,7 +159,7 @@
           </div>
 
           <div class="QxJxtg cazEfA">
-            <div class="xGLMIab">
+            <div class="xGLMIab" v-if="fileDataList && fileDataList.length > 0">
 
               <ul class="QAfdwP tvPMvPb" type="竖屏全选" v-if="fileItemStylePortrait == true" style="display: block;"    >
                 <!-- fufHyA yfHIsP EzubGg
@@ -221,7 +231,9 @@
                 <dd class="g-clearfix AuPKyz"
                   :class="{' hxyXEoG':filePortraitHoverItemIndex == index,'ntX8zG':file.checked == true}"  
                     @mouseover="fileHoverItem('portrait',index)"  
-                    @mouseleave="fileHoverItem('portrait',-1)" v-for="(file,index) in fileDataList" :key=index >
+                    @mouseleave="fileHoverItem('portrait',-1)" v-for="(file,index) in fileDataList" :key=index
+                    :ref="'itemFile'+index"
+                     >
                   <span  class="EOGexf" @click="setFileItemChecked(file,index,$event)">
                     <span class="icon NbKJexb"></span>
                   </span>
@@ -336,11 +348,18 @@
           :toastType="toastType"
           :toastText="toastText"
           />
-
+          
+          <!-- 上传组件 -->
           <Upload
-               
+             v-if="treeFlag"  
           />
 
+          <!-- 没有数据 -->
+           
+          <NoData v-if="fileDataList && fileDataList.length == 0" />
+
+          <!-- 弹出层vue tree -->
+          <Tree v-if="treeFlag" /> 
         </div>
       </div>
     </div>
@@ -355,6 +374,8 @@ import ShowTip from '../common/showTip'
 import Toast from '../common/toast'
 import Upload from '../common/upload'
 import BreadArrow from '../common/breadArrow'
+import NoData from '../common/nodata'
+import Tree from '../common/tree'
 
 import { mapGetters } from 'vuex'
 import {formatFileNameType,formatDate, formatFileSize} from '../../utils/common'
@@ -367,7 +388,9 @@ export default {
      ShowTip,
      Toast,
      Upload,
-     BreadArrow
+     BreadArrow,
+     NoData,
+     Tree
     },
     data(){
       return {
@@ -378,6 +401,7 @@ export default {
         delTitle:"确认要把所选文件放入回收站吗？",
         loadingFlag:false,
         toastShowFlag:false,
+        treeFlag:false,
         searchTitle:"",  
         searchTitleAttr:"搜索您的文件",
         searchTextFlag:true,//兼容input 清除按钮
@@ -388,7 +412,7 @@ export default {
         fileSortDesc:0, //0-升序 1-降序
         fileNameTitle:"新建文件夹",//怎么v-modle
         fileInputOffsetX:20,
-        fileInputOffsetY:73,
+        fileInputOffsetY:73, //这里每个叠加45就是定位位置 73 +（1-1）*45
         fileSortItemActiveIndex:0,
         fileSortItemActiveOrder:"name", //name,size,time
         fileSortFlag:false,
@@ -479,8 +503,14 @@ export default {
             "id":4
           }
         ],
+        // fileDataList:[],
         page:1,
         pageSize:10,
+        isDragSelecting: !false,
+         x1: 0,
+         y1: 0,
+         x2: 0,
+         y2: 0
       }
     },
     mounted(){
@@ -529,14 +559,44 @@ export default {
         var currentPath = this.$route.path;
         console.log(currentPath)
       },
+      //input 弹出框
       fileInputStyle(){
         return {
           left:this.fileInputOffsetX,
           top:this.fileInputOffsetY
         }
-      }
+      },
+      //拖拽选中样式的区域
+      selectionStyle() {
+         var x3 = Math.min(this.x1, this.x2);
+         var x4 = Math.max(this.x1, this.x2);
+         var y3 = Math.min(this.y1, this.y2);
+         var y4 = Math.max(this.y1, this.y2);
+         
+         return {
+            left: x3 + 'px',
+            top: y3 + 'px',
+            width: x4 - x3 + 'px',
+            height: y4 - y3 + 'px',
+         } 
+      } 
     },
     methods:{
+
+      mousedown(event) {
+         event.preventDefault();//阻止默认事件，取消文字选
+         this.isDragSelecting = true;
+         this.x1 = event.clientX;
+         this.y1 = event.clientY;
+      },
+      mouseup(event) {
+         this.isDragSelecting = false;
+      },
+      mousemove(event) {
+         console.log(this.x2)
+         this.x2 = event.clientX;
+         this.y2 = event.clientY;
+      },
       //input emit 文件名
       changeFileName(title){
         console.log('change',title) 
@@ -571,10 +631,13 @@ export default {
       },
       addNewFile(name){
           // this.fileNameTitle =  name
+          this.fileCheckAllFlag = false
+          this.fileCheckedGroups = []
           this.$store.commit('updateFileInputFlag',true)
           this.fileDataList.unshift({
             "isdir": 1,
-	          "server_filename":this.fileNameTitle
+            "server_filename":this.fileNameTitle,
+            "path":'/'+new Date()
           })
           
        },
@@ -665,7 +728,9 @@ export default {
        },
        setFileItemChecked(file,index,event){
             this.fileNameTitle = file.server_filename
-            console.log(event) 
+            // console.log(event.offsetLeft) 
+
+            // console.log('父节点',this.$refs.itemFile1[0].offsetTop)
 
             // this.fileInputOffsetX = event.offsetX
             // this.fileInputOffsetY = event.offsetY
@@ -673,8 +738,9 @@ export default {
             // this.fileInputOffsetX = event.clientX
             // this.fileInputOffsetY = event.clientY
 
-             this.fileInputOffsetX = event.pageX - 196
-            this.fileInputOffsetY = event.pageY -135
+           
+            this.fileInputOffsetY = 73+(index+1-1)*45
+
             if(file.hasOwnProperty("checked")){
                   file.checked = !file.checked;
             } else{
@@ -826,4 +892,14 @@ export default {
     cursor: pointer;
     text-decoration: none;
 }
+
+.selection-area {
+    position: absolute;
+    background-color: rgb(139, 191, 249);
+    border: 1px solid rgb(19, 98, 180);
+    opacity: 0.5;
+    z-index: 99999;
+}
+
+
 </style>

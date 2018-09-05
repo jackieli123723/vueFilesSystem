@@ -15,8 +15,20 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+/*禁止点击*/
 .KPDwCE .wPQwLCb{
         visibility: visible;
+       
+}
+
+.KPDwCE .wPQwLCb .gQNsDv {
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    width: 100%;
+    color: #424e67;
+    margin-top: -50px;
 }
 </style>
 
