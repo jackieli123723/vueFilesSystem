@@ -132,12 +132,16 @@
 
       <div class="3hh3BUu9">
         <!-- 这里增加js鼠标拖拽选中事件 
-              @mousedown="mousedown"
+          @mousedown="mousedown"
           @mouseup="mouseup"
           @mousemove="mousemove"
+
+             @mousedown.stop="mousedown"
+          @mouseup.stop="mouseup"
+          @mousemove.stop="mousemove"
         -->
         <div class="KPDwCE" style="height: 800px;border:1px solid red;"
-    
+       
         >
         <!-- 拖拽的虚拟框选中元素 -->
         <div 
@@ -237,7 +241,9 @@
                   <span  class="EOGexf" @click="setFileItemChecked(file,index,$event)">
                     <span class="icon NbKJexb"></span>
                   </span>
-                  <div class="qmstXYmX" :class="formatFileName(file.server_filename,'small')"></div>
+                  
+                
+                  <div class="qmstXYmX"  :class="formatFileName(file.server_filename,'small')"></div>
                   <div class="file-name" style="width:60%">
                     <div class="text">
                       <!-- <a href="javascript:void(0);" class="ipXEev">{{file.server_filename}}</a> -->
@@ -298,8 +304,17 @@
                     @mouseover="fileHoverItem('horizontal',index)" 
                      @mouseleave="fileHoverItem('horizontal',-1)"
                      v-for="(file,index) in fileDataList" :key=index>
-                    <div class="qmstXYmX"  :class="formatFileName(file.server_filename,'large')">
-                    </div>
+                    
+
+                     <!-- 为图片是可以预览 -->
+                    <div class="qmstXYmX" v-if="file.thumbs">
+                      <img class="wobg5k"
+                       :src="file.thumbs.icon"
+                      style="visibility: visible; left: -45px; top: 1px;">
+                    
+                    </div> 
+
+                  <div class="qmstXYmX" v-else :class="formatFileName(file.server_filename,'large')"></div>
                     <div class="file-name">
                       <!-- <a  class="ipXEev" href="javascript:void(0);" >{{file.server_filename}}</a> -->
 
@@ -351,7 +366,7 @@
           
           <!-- 上传组件 -->
           <Upload
-             v-if="treeFlag"  
+             v-if="!treeFlag"  
           />
 
           <!-- 没有数据 -->
@@ -501,12 +516,35 @@ export default {
             "local_ctime": 1377494892000,
             "server_filename": "【银吧公众号：YHDYLM】2016.HD720P.mp4",
             "id":4
+          },
+          {
+            "server_mtime": 1413277988000,
+            "category": 4,
+            "unlist": 0,
+            "fs_id": 269288858274638,
+            "isdir": 0,
+            "oper_id": 0,
+            "server_ctime": 1377494892000,
+            "local_mtime": 1377494892000,
+            "size": 1494727507,
+            "share": 0,
+            "md5": "8fae8413ce327111a9a1bd3bb9500973",
+            "path": "/360云盘/single-1530525346632.png",
+            "local_ctime": 1377494892000,
+            "server_filename": "vue.png",
+            "thumbs": {
+              "icon": "https://thumbnail0.baidupcs.com/thumbnail/11eb0235c4d28520ffd756c4b4053aaf?fid=2282772228-250528-1122532426776666&rt=pr&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-jbfTQnrbN7O%2bdOiI9lttqd65TzQ%3d&expires=8h&chkbd=0&chkv=0&dp-logid=5791270659668216815&dp-callid=0&time=1536307200&size=c60_u60&quality=100&vuk=2282772228&ft=image",
+              "url3": "https://thumbnail0.baidupcs.com/thumbnail/11eb0235c4d28520ffd756c4b4053aaf?fid=2282772228-250528-1122532426776666&rt=pr&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-jbfTQnrbN7O%2bdOiI9lttqd65TzQ%3d&expires=8h&chkbd=0&chkv=0&dp-logid=5791270659668216815&dp-callid=0&time=1536307200&size=c850_u580&quality=100&vuk=2282772228&ft=image",
+              "url2": "https://thumbnail0.baidupcs.com/thumbnail/11eb0235c4d28520ffd756c4b4053aaf?fid=2282772228-250528-1122532426776666&rt=pr&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-jbfTQnrbN7O%2bdOiI9lttqd65TzQ%3d&expires=8h&chkbd=0&chkv=0&dp-logid=5791270659668216815&dp-callid=0&time=1536307200&size=c360_u270&quality=100&vuk=2282772228&ft=image",
+              "url1": "https://thumbnail0.baidupcs.com/thumbnail/11eb0235c4d28520ffd756c4b4053aaf?fid=2282772228-250528-1122532426776666&rt=pr&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-jbfTQnrbN7O%2bdOiI9lttqd65TzQ%3d&expires=8h&chkbd=0&chkv=0&dp-logid=5791270659668216815&dp-callid=0&time=1536307200&size=c140_u90&quality=100&vuk=2282772228&ft=image"
+              },
+            "id":4
           }
         ],
         // fileDataList:[],
         page:1,
         pageSize:10,
-        isDragSelecting: !false,
+        isDragSelecting: false,
          x1: 0,
          y1: 0,
          x2: 0,
@@ -593,9 +631,11 @@ export default {
          this.isDragSelecting = false;
       },
       mousemove(event) {
-         console.log(this.x2)
-         this.x2 = event.clientX;
-         this.y2 = event.clientY;
+         if( this.isDragSelecting == true){
+          console.log(this.y2)
+          this.x2 = event.clientX-195;
+          this.y2 = event.clientY-124;
+         }
       },
       //input emit 文件名
       changeFileName(title){

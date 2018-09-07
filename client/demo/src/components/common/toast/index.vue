@@ -2,12 +2,14 @@
    <div>
            <template v-if="type=='loading'">
                  <!--  正在 -->
-                <div class="module-yun-tip" v-if="show">
-                        <div class="tip-inner">
-                            <span class="tip-icon tip-icon-loading"></span>
-                            <span class="tip-msg">{{toastText}}</span>
-                        </div>
-                </div>
+                
+                    <div class="module-yun-tip" v-if="show">
+                            <div class="tip-inner">
+                                <span class="tip-icon tip-icon-loading"></span>
+                                <span class="tip-msg">{{toastText}}</span>
+                            </div>
+                    </div>
+              
            </template>
 
            <template v-if="type=='success'">
@@ -108,6 +110,7 @@ margin-left: -58.5px;
     opacity:0;
     transform:scale(0.1);
 }
+
 
 .yun-header-tip-box{
     position: fixed

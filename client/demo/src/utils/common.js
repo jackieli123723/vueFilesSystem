@@ -93,6 +93,9 @@ export function formatFileNameType(name,size) {
         case 'pdf':
             return `fileicon-${size}-pdf`;
             break;
+        case 'png' || 'jpg' || 'jpeg' || 'gif':
+            return `fileicon-${size}-pic`;
+            break;    
         default: ''
             return `dir-${size}`; //默认文件名        
     }
