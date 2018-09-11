@@ -140,8 +140,8 @@
           @mouseup.stop="mouseup"
           @mousemove.stop="mousemove"
         -->
-        <div class="KPDwCE" style="height: 800px;border:1px solid red;"
-       
+        <div class="KPDwCE" ref="insideDomRef" style="height: 800px;border:1px solid green;"
+        
         >
         <!-- 拖拽的虚拟框选中元素 -->
         <div 
@@ -318,7 +318,7 @@
                     <div class="file-name">
                       <!-- <a  class="ipXEev" href="javascript:void(0);" >{{file.server_filename}}</a> -->
 
-                      <router-link  class="ipXEev" :to="{ path: 'all', query: { path: file.path }}" >
+                      <router-link  class="ipXEev" v-if="file.isdir" :to="{ path: 'all', query: { path: file.path }}" >
                           {{file.server_filename}}
                       </router-link>
 
@@ -375,6 +375,16 @@
 
           <!-- 弹出层vue tree -->
           <Tree v-if="treeFlag" /> 
+
+          <!-- 邮件菜单 -->
+         <RightMenu
+              :target="contextMenuTarget" 
+              :show="contextMenuVisible" 
+              @update:show="(show) => contextMenuVisible = show">
+          
+        
+         </RightMenu>  
+
         </div>
       </div>
     </div>
@@ -391,6 +401,8 @@ import Upload from '../common/upload'
 import BreadArrow from '../common/breadArrow'
 import NoData from '../common/nodata'
 import Tree from '../common/tree'
+import RightMenu from '../common/rightMenu'
+
 
 import { mapGetters } from 'vuex'
 import {formatFileNameType,formatDate, formatFileSize} from '../../utils/common'
@@ -405,10 +417,15 @@ export default {
      Upload,
      BreadArrow,
      NoData,
-     Tree
+     Tree,
+     RightMenu
     },
     data(){
       return {
+       
+         contextMenuTarget: document.body,
+        //contextMenuTarget: this.$refs.insideDomRef,
+        contextMenuVisible: false,
         toastType:'failure',
         toastText:'正在创建文件夹,请稍后...',
         delConfirmFlag:false,
@@ -552,6 +569,8 @@ export default {
       }
     },
     mounted(){
+      console.log(this.$refs.insideDomRef)
+      
      // this.$store.commit('updateFileInputFlag',true)
         //   var currentPath = this.$route.path;
         //   function getQueryString(name) {
