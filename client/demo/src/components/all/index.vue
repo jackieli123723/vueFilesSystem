@@ -374,7 +374,7 @@
           <NoData v-if="fileDataList && fileDataList.length == 0" />
 
           <!-- 弹出层vue tree -->
-          <Tree v-if="treeFlag" /> 
+          <Tree v-if="treeFlag"/> 
 
           <!-- 邮件菜单 -->
          <RightMenu
@@ -406,6 +406,8 @@ import RightMenu from '../common/rightMenu'
 
 import { mapGetters } from 'vuex'
 import {formatFileNameType,formatDate, formatFileSize} from '../../utils/common'
+
+
 
 export default {
     name: 'all',

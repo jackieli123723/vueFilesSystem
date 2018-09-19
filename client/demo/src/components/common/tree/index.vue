@@ -1,7 +1,8 @@
 <template>
     <div>
 
-        <div class="dialog dialog-fileTreeDialog   dialog-gray" id="fileTreeDialog" style="width: 520px; top: 166.5px; bottom: auto; left: 700px; right: auto; display: block; visibility: visible; z-index: 52;">
+        <div class="dialog dialog-fileTreeDialog   dialog-gray"   v-drag  id="fileTreeDialog" 
+        style="width: 520px; top: 166.5px; bottom: auto; left: 700px; right: auto; display: block; visibility: visible; z-index: 52;">
   <div class="dialog-header dialog-drag">
     <h3>
       <span class="dialog-header-title">
@@ -582,8 +583,14 @@
 </template>
 
 <script>
+
+import drag from '../../../directives/drag/drag'
+
 export default {
-    name:"tree"
+    name:"tree",
+    directives: {
+      drag
+    },
 }
 </script>
 

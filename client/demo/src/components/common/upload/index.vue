@@ -1,47 +1,64 @@
 <template>
-  <div class="dialog dialog-web-uploader   dialog-blue h5-uploader" id="web-uploader"
-   style="width: 633px; top: auto; bottom: 0px; left: auto; right: 30px; display: block; visibility: visible; z-index: 42;">
+  <div v-if="show" class="dialog dialog-web-uploader   dialog-blue h5-uploader" id="web-uploader"
+   style="width: 633px; top: auto; bottom: 0px; left: auto; right: 30px; display: block; visibility: visible; z-index: 42;position:fixed">
   
-  <div class="dialog-header">
-    <h3>
+  <div class="dialog-header"  v-show="toggleUploadFlag" >
+    <h3 @click="toggleUploder">
       <span class="dialog-header-title">
-        <em class="select-text" v-if="files && files.length >0">正在上传({{uplodedNumber}}/{{files.length}})</em></span>
+        <em class="select-text" v-if="files && files.length >0">正在上传({{uplodedNumber}}/{{files.length}})</em>
+         <em class="select-text" v-if="files.length == 0">上传完成</em>
+        </span>
+       
     </h3>
     <div class="dialog-control">
-      <span class="dialog-icon dialog-close icon icon-close">
+      <span class="dialog-icon dialog-close icon icon-close"  @click="hide">
         <span class="sicon">×</span></span>
-      <span class="dialog-icon dialog-min icon icon-minimize">
+      <span class="dialog-icon dialog-min icon icon-minimize" @click="toggleUploder">
         <span class="sicon">-</span></span>
     </div>
   </div>
 
-  <div class="dialog-min-header">
-    <div class="header-progress"></div>
-    <h3>
+  <div class="dialog-min-header" v-show="!toggleUploadFlag"  style="display:block">
+    <div class="header-progress" style="width: 46%; display: block;"></div>
+    <h3 @click="toggleUploder">
       <span class="dialog-header-title">
-        <em class="select-text">正在上传({{uplodedNumber}}/{{files.length}})</em></span>
+         <em class="select-text"  v-if="files && files.length >0">正在上传({{uplodedNumber}}/{{files.length}})</em>
+         <em class="select-text" v-if="files.length == 0">上传完成</em>
+        </span>
     </h3>
     <div class="dialog-control">
-      <span class="dialog-icon dialog-close icon icon-close">
+      <span class="dialog-icon dialog-close icon icon-close" @click="hide">
         <span class="sicon">×</span></span>
-      <span class="dialog-icon dialog-back icon icon-maximizing">
+      <span class="dialog-icon dialog-back icon icon-maximizing" @click="toggleUploder">
         <span class="sicon">□</span></span>
     </div>
-    <div class="tips" style="display: block;">
-      <div class="resident-caution">
-        <span class="caution-title">警告</span>
+
+
+    <!-- 这里的tips可关闭 -->
+    <!-- <div class="tips has-error" style="display: block;">
+      <div class="resident-caution" @click="toggleUploder">
+        <span class="caution-title" style="width: 4px; text-indent: -9999px;">警告</span>
         <span class="caution-text">严禁利用百度网盘上传、传播暴力恐怖、色情违法及侵犯他人合法权益的违法信息，一经发现将严格按照相关法律法规处理。</span>
         <em class="arrow-outer"></em>
         <em class="arrow-inner"></em>
       </div>
-      <a class="g-button" href="javascript:void(0);">
-        <span class="g-button-right">立即下载</span></a>
-      <div class="text"></div>
-      <em class="close">×</em>
-    </div>
+      <div class="text">有3个文件上传成功</div>
+      <em class="close">×</em></div> -->
+    <div class="tips has-error" style="display: block;" v-if="successFlag == true">
+        <div class="resident-caution" @click="toggleUploder">
+          <span class="caution-title" style="width: 4px; text-indent: -9999px;">警告</span>
+          <span class="caution-text">严禁利用百度网盘上传、传播暴力恐怖、色情违法及侵犯他人合法权益的违法信息，一经发现将严格按照相关法律法规处理。</span>
+          <em class="arrow-outer"></em>
+          <em class="arrow-inner"></em>
+        </div>
+    
+        <div class="text">有32个文件上传成功</div>
+        <em class="close" @click="successFlag = !successFlag">×</em>
+       </div>
+   
   </div>
 
-  <div class="dialog-body">
+  <div class="dialog-body" style="display: block;" v-show="toggleUploadFlag">
     <div class="uploader-list-wrapper">
       <div class="uploader-list-header">
         <div class="file-name">文件(夹)名</div>
@@ -50,30 +67,16 @@
         <div class="file-status">状态</div>
         <div class="file-operate">操作</div></div>
 
-      <!-- <div class="tips" style="display: block;">
-        <div class="resident-caution">
-          <span class="caution-title">警告</span>
-          <span class="caution-text">严禁利用百度网盘上传、传播暴力恐怖、色情违法及侵犯他人合法权益的违法信息，一经发现将严格按照相关法律法规处理。</span>
-          <em class="arrow-outer"></em>
-          <em class="arrow-inner"></em>
-        </div>
-        <a class="g-button" href="javascript:void(0);">
-          <span class="g-button-right">立即下载</span></a>
-        <div class="text"></div>
-        <em class="close">×</em>
-      </div> -->
-
-      <div class="tips has-error" style="display: none;">
+       <div class="tips has-error" style="display: block;" v-if="successFlag == true">
         <div class="resident-caution">
           <span class="caution-title" style="width: 4px; text-indent: -9999px;">警告</span>
           <span class="caution-text">严禁利用百度网盘上传、传播暴力恐怖、色情违法及侵犯他人合法权益的违法信息，一经发现将严格按照相关法律法规处理。</span>
           <em class="arrow-outer"></em>
           <em class="arrow-inner"></em>
         </div>
-        <a class="g-button" href="javascript:void(0);" style="display: none;">
-          <span class="g-button-right">立即下载</span></a>
+    
         <div class="text">有3个文件上传成功</div>
-        <em class="close">×</em>
+        <em class="close" @click="successFlag == false">×</em>
        </div>
        
         
@@ -149,11 +152,14 @@ export default {
   data(){
     return {
      uplodedNumber:0,//成功个数
-     files: []
+     files: [],
+     toggleUploadFlag:true, //默认展开上传列表
+     show:true, //上传显示
+     successFlag:true//折叠上传tips
     }
   },
   methods: {
-     size(fileSize){
+       size(fileSize){
            return formatFileSize(fileSize)
        },
       uploadFile: function (file) {
@@ -186,6 +192,13 @@ export default {
         for (var i = 0; i !== dt.files.length; i++) {
           this.uploadFile(dt.files[i]);
         }
+      },
+      toggleUploder(){
+         console.log(4)
+         this.toggleUploadFlag = !this.toggleUploadFlag
+      },
+      hide(){
+          this.show = !this.show
       }
     },
     mounted: function () {
