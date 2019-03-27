@@ -232,7 +232,7 @@
             <div class="NHcGw" style="overflow-y: auto; height: 700px;">
               <div class="vdAfKMb" style="height: auto;">
                 <!-- ntX8zG hxyXEoG 伪类做的 fileItemHover ntX8zG 打钩--> 
-                <dd class="g-clearfix AuPKyz"
+                <dd class="g-clearfix AuPKyz open-enable"
                   :class="{' hxyXEoG':filePortraitHoverItemIndex == index,'ntX8zG':file.checked == true}"  
                     @mouseover="fileHoverItem('portrait',index)"  
                     @mouseleave="fileHoverItem('portrait',-1)" v-for="(file,index) in fileDataList" :key=index
@@ -385,6 +385,10 @@
         
          </RightMenu>  
 
+         <!-- 横屏弹出图片框 -->
+
+         <!-- <ViewImg /> -->
+
         </div>
       </div>
     </div>
@@ -402,7 +406,7 @@ import BreadArrow from '../common/breadArrow'
 import NoData from '../common/nodata'
 import Tree from '../common/tree'
 import RightMenu from '../common/rightMenu'
-
+import ViewImg from '../common/viewImg'
 
 import { mapGetters } from 'vuex'
 import {formatFileNameType,formatDate, formatFileSize} from '../../utils/common'
@@ -420,7 +424,8 @@ export default {
      BreadArrow,
      NoData,
      Tree,
-     RightMenu
+     RightMenu,
+     ViewImg
     },
     data(){
       return {

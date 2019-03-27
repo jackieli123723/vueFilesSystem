@@ -37,7 +37,7 @@ input::-ms-clear,input::-ms-reveal {
  top:62px;
  left:0;
  bottom:0;
- z-index:9;
+ /* z-index:9; */
  position:absolute
 }
 #layoutMain {

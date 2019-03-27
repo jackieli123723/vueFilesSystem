@@ -25,6 +25,17 @@ module.exports = {
     lintOnSave: false,//关闭eslint，
     devServer:{
         open:true,
-        port:8888 //不开启配置默认8080
+        port:8888, //不开启配置默认8080
+         // proxy: 'http://localhost:4000' // 配置跨域处理,只有一个代理
+         proxy: {
+            '/api2': {
+                target: 'http://localhost:8080/api',
+                ws: true,
+                changeOrigin: true
+            },
+            '/api': {
+                target: 'http://localhost:8080/'
+            }
+        }// 配置多个代理
     }
 };

@@ -13,6 +13,7 @@ const NotAllow = () => import('../components/403');
 const Home = () => import('../components/home');
 
 const All = () => import('../components/all');
+const PictureIndex = () => import('../components/picture/index');
 const PictureLine = () => import('../components/picture/timeline');
 const PictureClassify = () => import('../components/picture/classify');
 const PictureRecent = () => import('../components/picture/recentupload');
@@ -48,7 +49,7 @@ const router = new VueRouter({
         {
           path: 'picture',
           name: "图片",
-          component: PictureLine,
+          component: PictureIndex,
           redirect:"picture/timeline",
           children: [
               {

@@ -77,6 +77,11 @@ export default {
         }
     },
     conmputed:{
+      // navLinkActived () {
+        
+      // }
+
+
        
     },
     methods:{

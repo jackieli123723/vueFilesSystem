@@ -78,6 +78,9 @@ export default {
 
 @import "../../assets/less/uploader-all.less";
 
+//图片弹出层
+@import "../../assets/less/viewimg.less";
+
 //这里是选主题样式覆盖 16种皮肤
 
 // @import "../../assets/theme/white/diskSystem-theme.less";
@@ -139,7 +142,7 @@ input::-ms-clear,input::-ms-reveal {
     top: 62px;
     left: 0;
     bottom: 0;
-    z-index: 9;
+    // z-index: 9;
     position: absolute
 }
 
@@ -161,7 +164,7 @@ input::-ms-clear,input::-ms-reveal {
     left: 0;
     width: 100%;
     height: 62px;
-    z-index: 41;
+    // z-index: 41;
     position: absolute
 }
 

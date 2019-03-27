@@ -1,6 +1,5 @@
 <template>
-    <div class="dialog dialog-dialog1   dialog-gray imgDialog" id="dialog1"
-style="width: 1920px; height: 637px; top: 0px; bottom: auto; left: 0px; right: auto; display: block; visibility: visible; z-index: 52;">
+    <div class="dialog dialog-dialog1   dialog-gray imgDialog" id="dialog1">
 	<div class="dialog-body">
 		<div class="img-dialog module-picPreview" id="imgs-dialog">
 			<div node-type="dlg-hd" class="dlg-hd">
@@ -272,3 +271,18 @@ export default {
     name:"viewimg"
 }
 </script>
+
+<style lang="less" scoped>
+#dialog1{
+position: fixed;
+width:100%;
+height: 100%;
+ top: 0px; 
+ bottom: 0px; 
+ left: 0px;
+  right: 0px;
+   display: block;
+	visibility: visible; 
+	z-index: 9999;
+}
+</style>
