@@ -1,15 +1,22 @@
 <template>
   <div class="module-timelineList module-type" style="height: 100%;">
      
-     <!-- 顶部导航 -->
+     <!-- 顶部导航 嵌套跳转 不能用a 否则导致 页面reload-->
       <div class="module-topToolBar">
+
           <div class="module-timeline-tabs">
             <span class="buttons activeStyle">
-              <a href="/picture/timeline" class="router-link-active">时光轴</a></span>
+         
+              <router-link :to="'/picture/timeline'" class="router-link-active">时光轴</router-link>
+            </span>  
             <span class="buttons classify-button">
-              <a href="/picture/classify" class="">智能分类</a></span>
+  
+              <router-link :to="'/picture/classify'">智能分类</router-link>
+            </span>  
             <span class="buttons">
-              <a href="/picture/recentupload" class="">最近上传</a></span>
+            
+              <router-link :to="'/picture/recentupload'">最近上传</router-link>
+              </span>
           </div>
 
           <div class="module-search-timeline" style="right: 25px;">
