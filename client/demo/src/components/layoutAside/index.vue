@@ -13,8 +13,9 @@
                                    <router-link to="/other" >other</router-link>
                                     <router-link to="/share" >share</router-link>
                                      <router-link to="/recycled" >recycled</router-link> -->
-                        <li v-for="(nav,index) in navLinks"  class="lvhwXz5w" :class="{'bHzsaPb':navLinkActived == index}"  :key='index'>
-                           <router-link :to=nav class="suaXvAq kuskajv"  >
+                        <!-- <li v-for="(nav,index) in navLinks"  class="lvhwXz5w" @click=go(index) :class="{'bHzsaPb':navLinkActived == index}"   :key='index'> -->
+                       <li v-for="(nav,index) in navLinks"  :class="[navLinkActived == index ? 'bHzsaPb' : '', 'lvhwXz5w']" @click=go(index)   :key='index'>
+                           <router-link :to=nav.path class="suaXvAq kuskajv"  >
                                <span class="text">
                                     <span class="icon" :class=nav.icon></span>
                                     <span>{{nav.name}}</span>
@@ -77,15 +78,12 @@ export default {
         }
     },
     conmputed:{
-      // navLinkActived () {
-        
-      // }
-
-
-       
+      
     },
     methods:{
-      
+      go(index){
+        this.navLinkActived = index
+      }
     }
 }
 </script>

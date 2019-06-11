@@ -15,11 +15,11 @@
           
           <!-- 筛选条件sort -->
           <div class="EzLavy">
-            <div class="xxyXvlq" @click="toggleSort" >
+            <div class="xxyXvlq" @click="toggleSort">
               <span class="icon icon-order"></span>
             </div>
-            <div class="sDwvAgb" style="display:block" v-if="fileSortFlag">
-              <span :key=item.id  :data-key=item.id class="vAFAFF" :class="{'ugcOHtb':fileSortItemActiveIndex == index}"  @click="sortPost(index,item.id)" v-for="(item,index) in fileSortItem">
+            <div class="sDwvAgb" style="display:block" v-show="fileSortFlag">
+              <span :key=item.id  :data-key=item.id class="vAFAFF" :class="{'ugcOHtb':fileSortItemActiveIndex == index}"   @mouseenter="showMouse(true)"   @mouseleave="showMouse(false)" @click="sortPost(index,item.id)" v-for="(item,index) in fileSortItem">
                 <em class="icon icon-sort-select"></em>{{item.name}}</span>
             </div>
           </div>
@@ -429,7 +429,7 @@ export default {
     },
     data(){
       return {
-       
+      
          contextMenuTarget: document.body,
         //contextMenuTarget: this.$refs.insideDomRef,
         contextMenuVisible: false,
@@ -646,7 +646,9 @@ export default {
       } 
     },
     methods:{
-
+     showMouse (bool) {
+      this.fileSortFlag = bool
+    },
       mousedown(event) {
          event.preventDefault();//阻止默认事件，取消文字选
          this.isDragSelecting = true;

@@ -280,6 +280,9 @@ export default {
     logout(){
        this.$router.push('/login');
     },
+    showMouse (bool) {
+      this.show = bool
+    },
     showPersonLayer(){
       this.personLayer = true
     },
